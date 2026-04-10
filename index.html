@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PNLE Psychiatric Drug Reference</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --pink:#FFB3C6;--pink-light:#FFF0F3;--pink-mid:#FFCDD9;--pink-dark:#9c1a40;
+  --lavender:#D4B8E0;--lavender-light:#F5EEFF;--lavender-dark:#5b1a8a;
+  --mint:#B5EAD7;--mint-light:#EDFBF5;--mint-dark:#1a6b4a;
+  --peach:#FFDAB9;--peach-light:#FFF5EC;--peach-dark:#a04a10;
+  --sky:#B8D8F8;--sky-light:#EEF6FF;--sky-dark:#0d4a9a;
+  --yellow:#FDEEBB;--yellow-light:#FFFDE7;--yellow-dark:#8a6200;
+  --rose:#FFCDD2;--rose-light:#FFF1F2;--rose-dark:#9a1a1a;
+  --teal:#B2DFDB;--teal-light:#E0F2F1;--teal-dark:#00574a;
+  --lilac:#E6CCFF;--lilac-light:#F9F4FF;--lilac-dark:#4a2a9a;
+  --cream:#FFF8F0;--text:#1a1a2e;--text2:#4a4a6a;--text3:#8a8aaa;
+  --white:#ffffff;--shadow:rgba(0,0,0,0.06);
+}
+body{font-family:'DM Sans',sans-serif;background:#fafaf8;color:var(--text);min-height:100vh}
+
+/* HEADER */
+.site-header{background:linear-gradient(135deg,#fff0f8 0%,#f0f4ff 40%,#f0fbf6 100%);border-bottom:1px solid #ede8f5;padding:2.5rem 1.5rem 2rem;text-align:center;position:relative;overflow:hidden}
+.site-header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;background:radial-gradient(circle,#ffd6e7 0%,transparent 70%);pointer-events:none}
+.site-header::after{content:'';position:absolute;bottom:-40px;left:-40px;width:180px;height:180px;background:radial-gradient(circle,#d4f5ea 0%,transparent 70%);pointer-events:none}
+.header-icon{font-size:3rem;margin-bottom:0.5rem;display:block}
+.site-header h1{font-family:'Nunito',sans-serif;font-size:2.2rem;font-weight:900;color:var(--text);letter-spacing:-1px;line-height:1.1}
+.site-header p{color:var(--text2);font-size:0.9rem;margin-top:0.4rem}
+.badge-row{display:flex;justify-content:center;gap:8px;margin-top:1rem;flex-wrap:wrap}
+.badge{font-size:0.68rem;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:0.6px;text-transform:uppercase}
+.b-pnle{background:#ffe0ec;color:#8B0038;border:1px solid #ffb3cc}
+.b-ph{background:#fff3cc;color:#7a4e00;border:1px solid #ffd970}
+.b-int{background:#e0eeff;color:#003d8a;border:1px solid #b8d8f8}
+.b-dsm{background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7}
+
+/* DSM CHANGES BANNER */
+.dsm-banner{background:linear-gradient(135deg,#fff8e1,#fff3f8);border:1.5px solid #ffd970;border-radius:16px;margin:1.5rem auto;max-width:980px;padding:1.2rem 1.5rem}
+.dsm-banner h3{font-family:'Nunito',sans-serif;font-size:1rem;font-weight:800;color:#7a4e00;margin-bottom:0.8rem;display:flex;align-items:center;gap:8px}
+.dsm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}
+.dsm-change{background:white;border-radius:10px;padding:0.7rem 0.9rem;border:1px solid #ffeaa0;font-size:0.78rem}
+.dsm-change .old{color:#b71c1c;text-decoration:line-through;font-weight:600}
+.dsm-change .arrow{color:#888;margin:0 4px}
+.dsm-change .new{color:#1b5e20;font-weight:700}
+.dsm-change .note{color:#666;font-size:0.72rem;margin-top:2px;display:block}
+
+/* CONTROLS */
+.controls{max-width:980px;margin:0 auto;padding:0 1.2rem}
+.search-wrap{position:relative;margin:1.2rem 0 0.8rem}
+.search-wrap input{width:100%;padding:0.75rem 1rem 0.75rem 2.8rem;border:1.5px solid #e0dff5;border-radius:14px;font-size:0.9rem;font-family:'DM Sans',sans-serif;color:var(--text);background:white;outline:none;transition:border 0.15s;box-shadow:0 2px 12px rgba(0,0,0,0.04)}
+.search-wrap input:focus{border-color:#c4b5f7}
+.search-wrap .si{position:absolute;left:0.9rem;top:50%;transform:translateY(-50%);font-size:1rem;pointer-events:none}
+.filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.2rem}
+.fbtn{font-size:0.72rem;font-weight:700;padding:6px 14px;border-radius:20px;border:1.5px solid #e0dff5;cursor:pointer;transition:all 0.15s;background:white;color:var(--text2);font-family:'DM Sans',sans-serif;letter-spacing:0.3px}
+.fbtn:hover{border-color:#c4b5f7;color:var(--text)}
+.fbtn.active{background:var(--text);color:white;border-color:var(--text)}
+
+/* LEGEND */
+.legend{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:1.2rem;padding:0.8rem 1rem;background:white;border-radius:12px;border:1px solid #ede8f5}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:0.72rem;color:var(--text2);font-weight:500}
+.ldot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+
+/* GRID */
+.disorder-grid{display:grid;gap:1rem;max-width:980px;margin:0 auto;padding:0 1.2rem 3rem}
+
+/* CARDS */
+.card{border-radius:18px;border:1.5px solid;overflow:hidden;transition:box-shadow 0.18s,transform 0.18s}
+.card:hover{box-shadow:0 8px 32px rgba(0,0,0,0.09);transform:translateY(-1px)}
+
+.card-header{padding:1.1rem 1.3rem 0.9rem;cursor:pointer;display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.chl{display:flex;align-items:flex-start;gap:12px}
+.card-icon{font-size:1.6rem;flex-shrink:0;margin-top:2px}
+.card-title{font-family:'Nunito',sans-serif;font-size:1.05rem;font-weight:900;color:var(--text);line-height:1.2}
+.card-subtitle{font-size:0.76rem;color:var(--text2);margin-top:3px;line-height:1.4}
+.dsm-tag{font-size:0.65rem;font-weight:700;padding:2px 8px;border-radius:10px;margin-top:5px;display:inline-block}
+.dsm-change-tag{font-size:0.62rem;font-weight:700;padding:2px 8px;border-radius:10px;margin-top:3px;margin-left:4px;display:inline-block;background:#fff3cd;color:#856404;border:1px solid #ffc107}
+.chevron{font-size:0.8rem;color:var(--text3);transition:transform 0.22s;flex-shrink:0;margin-top:5px}
+.card.open .chevron{transform:rotate(180deg)}
+
+.card-body{display:none;padding:0 1.3rem 1.2rem}
+.card.open .card-body{display:block}
+.divider{height:1px;background:rgba(0,0,0,0.06);margin-bottom:1rem}
+
+/* ILLNESS INFO */
+.illness-info{border-radius:10px;padding:0.7rem 0.9rem;margin-bottom:0.9rem;font-size:0.78rem;line-height:1.6;border-left:3px solid}
+.illness-info strong{font-weight:700;font-size:0.8rem;display:block;margin-bottom:2px}
+
+/* DRUG SECTIONS */
+.dsec{margin-bottom:0.8rem}
+.dlabel{font-size:0.68rem;font-weight:800;letter-spacing:0.8px;text-transform:uppercase;display:flex;align-items:center;gap:6px;margin-bottom:0.4rem;color:#444}
+.ldot-first{background:#4CAF50}
+.ldot-second{background:#FF9800}
+.ldot-od{background:#E53935}
+.ldot-note{background:#1565C0}
+.dpills{display:flex;flex-wrap:wrap;gap:5px}
+.dpill{font-size:0.72rem;padding:3px 10px;border-radius:20px;font-weight:600;border:1px solid transparent;line-height:1.4}
+.drug-entry{background:white;border-radius:10px;padding:0.5rem 0.8rem;margin-bottom:5px;border:1px solid rgba(0,0,0,0.06);font-size:0.76rem}
+.drug-entry .generic{font-weight:700;color:var(--text)}
+.drug-entry .brand{color:#666;font-size:0.7rem}
+.drug-entry .class-tag{font-size:0.62rem;font-weight:700;padding:2px 7px;border-radius:8px;margin-left:5px;vertical-align:middle}
+.drug-entry .notes-d{font-size:0.69rem;color:#888;margin-top:2px}
+
+.od-box{background:#fff5f5;border:1px solid #ffcdd2;border-radius:10px;padding:0.6rem 0.9rem;margin-bottom:0.5rem}
+.od-box .od-title{font-size:0.68rem;font-weight:800;color:#b71c1c;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:0.4rem}
+.od-item{font-size:0.74rem;color:#5a1010;margin-bottom:3px;display:flex;gap:6px}
+.od-item::before{content:"⚠";flex-shrink:0}
+
+.note-box{font-size:0.75rem;color:var(--text2);background:rgba(255,255,255,0.7);border-radius:10px;padding:0.6rem 0.8rem;margin-top:0.6rem;line-height:1.6;border-left:3px solid #90caf9}
+.note-box strong{color:var(--text);font-weight:700}
+
+.ref-row{display:flex;gap:5px;flex-wrap:wrap;margin-top:0.7rem}
+.rtag{font-size:0.62rem;font-weight:600;padding:2px 8px;border-radius:8px}
+.r-ph{background:#fff3cc;color:#7a4e00;border:1px solid #ffd970}
+.r-int{background:#e0eeff;color:#003d8a;border:1px solid #b8d8f8}
+
+/* PERSONALITY CLUSTER */
+.cluster-wrap{border-radius:14px;padding:0.9rem;margin-bottom:0.8rem;border:1.5px solid}
+.cluster-title{font-family:'Nunito',sans-serif;font-size:0.85rem;font-weight:900;margin-bottom:0.5rem;display:flex;align-items:center;gap:8px}
+.cluster-disorders{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-bottom:0.6rem}
+.pd-item{background:white;border-radius:10px;padding:0.5rem 0.7rem;border:1px solid rgba(0,0,0,0.07)}
+.pd-name{font-size:0.78rem;font-weight:700;color:var(--text)}
+.pd-hallmark{font-size:0.68rem;color:var(--text2);margin-top:2px}
+.pd-key{font-size:0.65rem;font-style:italic;color:#888;margin-top:2px}
+
+/* CLASS TAGS colors */
+.ct-ssri{background:#e8f5e9;color:#2e7d32;border:1px solid #a5d6a7}
+.ct-snri{background:#e3f2fd;color:#0d47a1;border:1px solid #90caf9}
+.ct-tca{background:#fff3e0;color:#e65100;border:1px solid #ffcc80}
+.ct-maoi{background:#fce4ec;color:#880e4f;border:1px solid #f48fb1}
+.ct-benzo{background:#f3e5f5;color:#4a148c;border:1px solid #ce93d8}
+.ct-ap-typ{background:#e0f2f1;color:#004d40;border:1px solid #80cbc4}
+.ct-ap-atyp{background:#e8eaf6;color:#1a237e;border:1px solid #9fa8da}
+.ct-mood{background:#fff8e1;color:#f57f17;border:1px solid #ffe082}
+.ct-anti{background:#fbe9e7;color:#bf360c;border:1px solid #ffab91}
+.ct-stim{background:#e8eaf6;color:#1a237e;border:1px solid #9fa8da}
+.ct-opioid{background:#efebe9;color:#4e342e;border:1px solid #bcaaa4}
+.ct-antag{background:#fce4ec;color:#880e4f;border:1px solid #f48fb1}
+.ct-cholinest{background:#e0f7fa;color:#006064;border:1px solid #80deea}
+.ct-nmda{background:#f3e5f5;color:#4a148c;border:1px solid #ce93d8}
+.ct-other{background:#f5f5f5;color:#424242;border:1px solid #e0e0e0}
+.ct-hypnotic{background:#ede7f6;color:#311b92;border:1px solid #b39ddb}
+.ct-buspirone{background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7}
+
+.empty{text-align:center;color:var(--text3);padding:3rem;font-size:0.9rem}
+
+.section-divider{font-family:'Nunito',sans-serif;font-size:0.72rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--text3);margin:0.5rem 0;padding-left:4px;border-left:3px solid #e0dff5}
+
+.tabs{display:flex;gap:4px;margin-bottom:0.8rem;flex-wrap:wrap}
+.tab{font-size:0.72rem;font-weight:700;padding:4px 12px;border-radius:8px;border:1.5px solid;cursor:pointer;transition:all 0.12s}
+.tab.active{color:white}
+
+/* Quick Facts */
+.qfacts{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:6px;margin-bottom:0.8rem}
+.qf{background:white;border-radius:10px;padding:0.5rem 0.7rem;border:1px solid rgba(0,0,0,0.07);font-size:0.72rem}
+.qf-label{color:var(--text3);font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px}
+.qf-val{color:var(--text);font-weight:700;margin-top:1px}
+
+@media(max-width:600px){
+  .site-header h1{font-size:1.6rem}
+  .cluster-disorders{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="site-header">
+  <span class="header-icon">🧠</span>
+  <h1>PNLE Psychiatric Drug Reference</h1>
+  <p>Complete Pharmacology Guide · Philippine Nursing Licensure Examination</p>
+  <div class="badge-row">
+    <span class="badge b-pnle">PNLE Ready</span>
+    <span class="badge b-ph">DOH · MIMS · RA 9165</span>
+    <span class="badge b-int">DSM-5 · APA · WHO</span>
+    <span class="badge b-dsm">DSM-IV → DSM-5 Updates</span>
+  </div>
+</div>
+
+<!-- DSM CHANGES BANNER -->
+<div class="dsm-banner" style="padding:1.2rem 1.5rem">
+  <h3>⚡ DSM-IV → DSM-5 Key Changes (PNLE Context)</h3>
+  <div class="dsm-grid">
+    <div class="dsm-change"><span class="old">Hypochondriasis</span><span class="arrow">→</span><span class="new">Illness Anxiety Disorder</span><span class="note">Somatic preoccupation WITHOUT significant sx; or Somatic Symptom Disorder WITH distressing sx</span></div>
+    <div class="dsm-change"><span class="old">Somatization Disorder</span><span class="arrow">→</span><span class="new">Somatic Symptom Disorder</span><span class="note">Focus on thoughts/feelings/behaviors, not symptom count</span></div>
+    <div class="dsm-change"><span class="old">Pain Disorder</span><span class="arrow">→</span><span class="new">Somatic Symptom Disorder (pain)</span><span class="note">Eliminated as separate category</span></div>
+    <div class="dsm-change"><span class="old">Mental Retardation</span><span class="arrow">→</span><span class="new">Intellectual Disability</span><span class="note">IQ alone insufficient; adaptive functioning also required</span></div>
+    <div class="dsm-change"><span class="old">Asperger's Disorder</span><span class="arrow">→</span><span class="new">ASD Level 1</span><span class="note">Now under Autism Spectrum Disorder umbrella</span></div>
+    <div class="dsm-change"><span class="old">Dysthymia</span><span class="arrow">→</span><span class="new">Persistent Depressive Disorder</span><span class="note">Includes chronic MDD + dysthymia</span></div>
+    <div class="dsm-change"><span class="old">OCD (Anxiety chapter)</span><span class="arrow">→</span><span class="new">OCD & Related (own chapter)</span><span class="note">BDD, Hoarding, Trichotillomania, Excoriation added</span></div>
+    <div class="dsm-change"><span class="old">PTSD (Anxiety chapter)</span><span class="arrow">→</span><span class="new">Trauma & Stressor chapter</span><span class="note">New dissociative subtype; Criterion A revised</span></div>
+    <div class="dsm-change"><span class="old">Gender Identity Disorder</span><span class="arrow">→</span><span class="new">Gender Dysphoria</span><span class="note">Destigmatized; focus on distress not identity itself</span></div>
+    <div class="dsm-change"><span class="old">Dementia/Delirium chapter</span><span class="arrow">→</span><span class="new">Neurocognitive Disorders</span><span class="note">Major & Mild NCD; Alzheimer's, Vascular, LBD, FTD subtypes</span></div>
+    <div class="dsm-change"><span class="old">Bereavement Exclusion (MDD)</span><span class="arrow">→</span><span class="new">Removed in DSM-5</span><span class="note">MDD can be diagnosed during bereavement</span></div>
+    <div class="dsm-change"><span class="old">Substance Abuse + Dependence</span><span class="arrow">→</span><span class="new">Substance Use Disorder</span><span class="note">Single spectrum; mild/moderate/severe based on criteria count</span></div>
+  </div>
+</div>
+
+<div class="controls">
+  <div class="search-wrap">
+    <span class="si">🔍</span>
+    <input type="text" id="searchInput" placeholder="Search disorder, drug, brand name, or drug class…" oninput="filterCards()">
+  </div>
+  <div class="filter-row" id="filterRow">
+    <button class="fbtn active" onclick="setFilter('all',this)">All Disorders</button>
+    <button class="fbtn" onclick="setFilter('psychotic',this)">🌀 Psychotic</button>
+    <button class="fbtn" onclick="setFilter('mood',this)">🌧 Mood</button>
+    <button class="fbtn" onclick="setFilter('anxiety',this)">😰 Anxiety</button>
+    <button class="fbtn" onclick="setFilter('ocd',this)">🔁 OCD</button>
+    <button class="fbtn" onclick="setFilter('trauma',this)">🪖 Trauma</button>
+    <button class="fbtn" onclick="setFilter('neuro',this)">🧩 Neurocognitive</button>
+    <button class="fbtn" onclick="setFilter('substance',this)">⚗ Substance</button>
+    <button class="fbtn" onclick="setFilter('personality',this)">🎭 Personality</button>
+    <button class="fbtn" onclick="setFilter('somatic',this)">🩺 Somatic</button>
+    <button class="fbtn" onclick="setFilter('neurodev',this)">🌈 Neurodevelopmental</button>
+    <button class="fbtn" onclick="setFilter('other',this)">✦ Other</button>
+  </div>
+  <div class="legend">
+    <div class="legend-item"><span class="ldot ldot-first"></span>1st Line</div>
+    <div class="legend-item"><span class="ldot ldot-second"></span>2nd Line</div>
+    <div class="legend-item"><span class="ldot ldot-od"></span>OD Management</div>
+    <div class="legend-item"><span class="ldot ldot-note"></span>Key Note</div>
+    <div class="legend-item" style="margin-left:auto"><span style="font-size:0.65rem;background:#fff3cd;color:#856404;padding:2px 6px;border-radius:6px;font-weight:700">DSM CHANGE</span> = DSM-IV→5 change</div>
+  </div>
+</div>
+
+<div class="disorder-grid" id="disorderGrid"></div>
+<div class="empty" id="emptyMsg" style="display:none">No results found. Try a different search term.</div>
+
+<script>
+const CLASS_TAGS = {
+  ssri:'<span class="class-tag ct-ssri">SSRI</span>',
+  snri:'<span class="class-tag ct-snri">SNRI</span>',
+  tca:'<span class="class-tag ct-tca">TCA</span>',
+  maoi:'<span class="class-tag ct-maoi">MAOI</span>',
+  benzo:'<span class="class-tag ct-benzo">Benzodiazepine</span>',
+  ap_typ:'<span class="class-tag ct-ap-typ">Typical AP</span>',
+  ap_atyp:'<span class="class-tag ct-ap-atyp">Atypical AP</span>',
+  mood:'<span class="class-tag ct-mood">Mood Stabilizer</span>',
+  anti:'<span class="class-tag ct-anti">Anticonvulsant</span>',
+  stim:'<span class="class-tag ct-stim">CNS Stimulant</span>',
+  opioid:'<span class="class-tag ct-opioid">Opioid Agonist</span>',
+  antag:'<span class="class-tag ct-antag">Opioid Antagonist</span>',
+  cholinest:'<span class="class-tag ct-cholinest">Cholinesterase Inh.</span>',
+  nmda:'<span class="class-tag ct-nmda">NMDA Antagonist</span>',
+  hypnotic:'<span class="class-tag ct-hypnotic">Z-drug/Hypnotic</span>',
+  buspirone:'<span class="class-tag ct-buspirone">Azapirone</span>',
+  other:'<span class="class-tag ct-other">Other</span>',
+};
+
+const disorders = [
+// ===== PSYCHOTIC =====
+{
+  id:'schizophrenia',icon:'🌀',title:'Schizophrenia',
+  subtitle:'Positive & negative symptoms, disorganized behavior',
+  dsm:'DSM-5: F20.9',category:'psychotic',dsmchange:false,
+  color:{bg:'#F5EEFF',border:'#D4B8E0',acc:'#5b1a8a',ib:'#EDE0FF',ibl:'#3a0a70',pill:'#EDE0FF',pt:'#4a1277',pill2:'#FFF5CC',pt2:'#7A5A00'},
+  illness:{
+    desc:'Schizophrenia is a chronic psychotic disorder characterized by distorted thinking, perception, and behavior. Onset typically in late teens to early 30s. Males tend to have earlier onset.',
+    hallmarks:['Positive Sx: hallucinations (auditory most common), delusions, disorganized speech','Negative Sx: flat affect, alogia, avolition, anhedonia, asociality','Cognitive: poor executive function, memory deficits'],
+    duration:'Symptoms ≥6 months (1 month active phase)',
+    phnote:'Most common presentation in PH psych wards; Chlorpromazine (Thorazine) still widely used in gov\'t facilities due to cost.'
+  },
+  first:[
+    {g:'Risperidone',b:'Risperdal',cls:'ap_atyp',note:'Most commonly prescribed atypical; low cost in PH'},
+    {g:'Olanzapine',b:'Zyprexa',cls:'ap_atyp',note:'Watch for metabolic syndrome, weight gain'},
+    {g:'Haloperidol',b:'Haldol',cls:'ap_typ',note:'IM available; gold standard for acute agitation'},
+    {g:'Chlorpromazine (CPZ)',b:'Thorazine',cls:'ap_typ',note:'DOH EML; most affordable in rural PH health units'},
+    {g:'Quetiapine',b:'Seroquel',cls:'ap_atyp',note:'Good for negative sx and sleep'},
+  ],
+  second:[
+    {g:'Clozapine',b:'Clozaril',cls:'ap_atyp',note:'Treatment-resistant ONLY; requires weekly CBC (agranulocytosis risk)'},
+    {g:'Aripiprazole',b:'Abilify',cls:'ap_atyp',note:'Partial D2 agonist; low metabolic SE'},
+    {g:'Paliperidone',b:'Invega',cls:'ap_atyp',note:'Active metabolite of risperidone'},
+    {g:'Ziprasidone',b:'Geodon',cls:'ap_atyp',note:'Least weight gain; monitor QTc'},
+  ],
+  od:[
+    'Atypical AP OD: activated charcoal if early, supportive care, monitor QTc (risk of torsades)',
+    'Haloperidol OD: treat arrhythmias, manage EPS with Biperiden (Akineton)',
+    'Biperiden (Akineton) — anticholinergic for EPS/dystonia in PH setting',
+    'NMS (Neuroleptic Malignant Syndrome): STOP drug → Dantrolene, Bromocriptine, cooling',
+  ],
+  note:'<strong>EPS Side Effects:</strong> Biperiden (Akineton) used widely in PH. Clozapine requires WBC monitoring. <strong>NMS:</strong> fever + rigidity + altered consciousness + autonomic instability = EMERGENCY.',
+  refs:['DOH EML Philippines','PhilHealth Z-Benefit','MIMS Philippines','APA Schizophrenia Guidelines 2021']
+},
+{
+  id:'schizoaffective',icon:'🔄',title:'Schizoaffective Disorder',
+  subtitle:'Concurrent psychotic + mood symptoms',
+  dsm:'DSM-5: F25',category:'psychotic',dsmchange:false,
+  color:{bg:'#F5EEFF',border:'#D4B8E0',acc:'#5b1a8a',ib:'#EDE0FF',ibl:'#3a0a70',pill:'#EDE0FF',pt:'#4a1277',pill2:'#FFF5CC',pt2:'#7A5A00'},
+  illness:{
+    desc:'Psychotic symptoms present for ≥2 weeks WITHOUT mood symptoms at some point. Must have a major mood episode (manic or depressive) for the majority of the total illness duration.',
+    hallmarks:['Psychotic sx concurrent with mood episode','Hallucinations/delusions persisting without mood sx','Two subtypes: Bipolar type & Depressive type'],
+    duration:'Psychosis ≥2 weeks independently of mood episode',
+    phnote:'Distinguish from MDD with psychotic features (psychosis only during mood episode).'
+  },
+  first:[
+    {g:'Risperidone/Olanzapine',b:'Risperdal/Zyprexa',cls:'ap_atyp',note:'For psychotic component'},
+    {g:'Lithium',b:'Eskalith, Lithane',cls:'mood',note:'Bipolar type — mood stabilization'},
+    {g:'Valproate/Divalproex',b:'Depakene/Depakote',cls:'mood',note:'Bipolar type, faster than lithium'},
+  ],
+  second:[
+    {g:'Clozapine',b:'Clozaril',cls:'ap_atyp',note:'Refractory cases'},
+    {g:'Aripiprazole',b:'Abilify',cls:'ap_atyp',note:'With antidepressant for depressive type'},
+    {g:'Paliperidone ER',b:'Invega',cls:'ap_atyp',note:'FDA-indicated for schizoaffective'},
+  ],
+  od:[
+    'Lithium toxicity (>1.5mEq/L): tremors, ataxia, confusion → IV NS, dialysis if severe',
+    'Antipsychotic OD: activated charcoal, QTc monitoring, supportive',
+  ],
+  note:'Never give antidepressant alone in bipolar type — can trigger mania. <strong>Paliperidone</strong> is the only atypical AP FDA-approved specifically for schizoaffective disorder.',
+  refs:['DSM-5','APA Guidelines','MIMS PH']
+},
+{
+  id:'delusional',icon:'💭',title:'Delusional Disorder / Brief Psychotic',
+  subtitle:'Fixed false beliefs OR acute psychosis <1 month',
+  dsm:'DSM-5: F22 / F23',category:'psychotic',dsmchange:false,
+  color:{bg:'#F5EEFF',border:'#D4B8E0',acc:'#5b1a8a',ib:'#EDE0FF',ibl:'#3a0a70',pill:'#EDE0FF',pt:'#4a1277',pill2:'#FFF5CC',pt2:'#7A5A00'},
+  illness:{
+    desc:'Delusional Disorder: non-bizarre delusions ≥1 month; functioning not markedly impaired; no hallucinations. Brief Psychotic: sudden onset <1 month, precipitated by stressor.',
+    hallmarks:['Delusional D/O: erotomanic, grandiose, jealous, persecutory, somatic subtypes','Brief Psychotic: <1 month, associated with stressor','Hallucinations are ABSENT or minimal in Delusional D/O'],
+    duration:'Delusional: ≥1 month; Brief Psychotic: >1 day <1 month',
+    phnote:'Delusional jealousy (Othello syndrome) — clinically relevant in domestic violence PH context.'
+  },
+  first:[
+    {g:'Pimozide',b:'Orap',cls:'ap_typ',note:'Delusional D/O — particularly somatic type'},
+    {g:'Haloperidol',b:'Haldol',cls:'ap_typ',note:'Acute agitation'},
+    {g:'Lorazepam',b:'Ativan',cls:'benzo',note:'Acute psychosis/agitation PRN'},
+  ],
+  second:[
+    {g:'Risperidone',b:'Risperdal',cls:'ap_atyp',note:'If pimozide not tolerated'},
+    {g:'Quetiapine',b:'Seroquel',cls:'ap_atyp',note:'Particularly for comorbid anxiety'},
+  ],
+  od:[
+    'Benzo OD: Flumazenil (Anexate) 0.2mg IV — reversal agent',
+    'Antipsychotic OD: supportive, QTc monitoring',
+  ],
+  note:'Therapeutic alliance is crucial — do NOT confront or agree with delusions. Brief psychotic disorder often self-limiting. Identify and manage stressor.',
+  refs:['DSM-5','APA','MIMS PH']
+},
+// ===== MOOD =====
+{
+  id:'mdd',icon:'🌧️',title:'Major Depressive Disorder (MDD)',
+  subtitle:'Persistent low mood, anhedonia, ≥5 symptoms for ≥2 weeks',
+  dsm:'DSM-5: F32/F33',category:'mood',dsmchange:false,
+  color:{bg:'#EEF6FF',border:'#B8D8F8',acc:'#0d4a9a',ib:'#DCEEFF',ibl:'#0a336e',pill:'#DCEEFF',pt:'#0d3c7a',pill2:'#FFF5CC',pt2:'#7A5A00'},
+  illness:{
+    desc:'MDD requires ≥5 of 9 symptoms for ≥2 weeks with ONE being depressed mood OR anhedonia. Must cause significant functional impairment. DSM-5 removed bereavement exclusion.',
+    hallmarks:['SIG E CAPS mnemonic: Sleep, Interest, Guilt, Energy, Concentration, Appetite, Psychomotor, Suicidal ideation','Depressed mood OR anhedonia MUST be present','Specifiers: psychotic, melancholic, seasonal, peripartum'],
+    duration:'≥2 weeks; most episodes last 6–12 months if untreated',
+    phnote:'Amitriptyline most available in rural Philippine health units (DOH EML). SSRIs preferred in urban settings.'
+  },
+  first:[
+    {g:'Fluoxetine',b:'Prozac, Lovan',cls:'ssri',note:'Long half-life; good for compliance; safe in pregnancy'},
+    {g:'Sertraline',b:'Zoloft, Serloft',cls:'ssri',note:'Most commonly prescribed SSRI globally; safe in cardiac patients'},
+    {g:'Escitalopram',b:'Lexapro, Cipralex',cls:'ssri',note:'Most selective SSRI; fewest drug interactions'},
+    {g:'Paroxetine',b:'Paxil, Seroxat',cls:'ssri',note:'Most anticholinergic SSRI; avoid in elderly'},
+    {g:'Amitriptyline',b:'Elavil, Tryptanol',cls:'tca',note:'DOH EML; dual use for depression + chronic pain'},
+    {g:'Imipramine',b:'Tofranil',cls:'tca',note:'DOH EML; also used for enuresis'},
+  ],
+  second:[
+    {g:'Venlafaxine',b:'Effexor XR',cls:'snri',note:'Also for GAD, panic; dose-dependent NE effects'},
+    {g:'Duloxetine',b:'Cymbalta',cls:'snri',note:'Good for comorbid pain; FDA-approved for fibromyalgia'},
+    {g:'Mirtazapine',b:'Remeron',cls:'other',note:'NaSSA; good for insomnia, appetite; no sexual SE'},
+    {g:'Bupropion',b:'Wellbutrin',cls:'other',note:'NDRI; no sexual SE; avoid in seizure/eating disorders'},
+    {g:'Phenelzine',b:'Nardil',cls:'maoi',note:'Atypical depression; AVOID tyramine-rich food (hypertensive crisis)'},
+    {g:'Tranylcypromine',b:'Parnate',cls:'maoi',note:'Irreversible MAOI; multiple drug interactions'},
+  ],
+  od:[
+    'SSRI OD → Serotonin Syndrome: fever, clonus, agitation, diaphoresis → Cyproheptadine (antiserotonergic), cooling, BZD for seizures',
+    'TCA OD (LIFE-THREATENING): QRS widening → Sodium Bicarbonate (NaHCO₃), Mg Sulfate, avoid physostigmine',
+    'MAOI OD: hypertensive crisis → Phentolamine (IV), avoid SSRIs/TCAs (serotonin syndrome risk)',
+    'Activated charcoal if within 1 hour of ingestion',
+  ],
+  note:'<strong>SSRI Black Box Warning:</strong> increased suicidality in children/adolescents — monitor closely first 4 weeks. <strong>MAOI food restriction:</strong> no aged cheese, cured meats, red wine, beer, fava beans (tyramine = hypertensive crisis). SSRIs take 4–6 weeks for full effect.',
+  refs:['DOH EML Philippines','APA Depression Guidelines 2023','MIMS Philippines','NICE CG90']
+},
+{
+  id:'bipolar',icon:'☯️',title:'Bipolar Disorder I & II',
+  subtitle:'Cycling mania/hypomania + depressive episodes',
+  dsm:'DSM-5: F31',category:'mood',dsmchange:false,
+  color:{bg:'#EEF6FF',border:'#B8D8F8',acc:'#0d4a9a',ib:'#DCEEFF',ibl:'#0a336e',pill:'#DCEEFF',pt:'#0d3c7a',pill2:'#FFF5CC',pt2:'#7A5A00'},
+  illness:{
+    desc:'Bipolar I: ≥1 manic episode (≥7 days or hospitalization); may have MDE. Bipolar II: hypomanic + depressive episodes; NO full mania. Cyclothymia: subthreshold sx ≥2 years.',
+    hallmarks:['Mania (DIGFAST): Distractibility, Impulsivity, Grandiosity, Flight of ideas, Activity↑, Sleep↓, Talkativeness','Hypomania: same but ≤4 days, no hospitalization, no psychosis','Bipolar I: full mania; Bipolar II: only hypomania'],
+    duration:'Manic episode ≥7 days; Hypomanic ≥4 days',
+    phnote:'Bipolar II often misdiagnosed as MDD in PH. Always take full psychiatric history including past hypomanic episodes.'
+  },
+  first:[
+    {g:'Lithium Carbonate',b:'Eskalith, Lithane, Carbolith',cls:'mood',note:'Gold standard; therapeutic level 0.6–1.2 mEq/L; toxic >1.5'},
+    {g:'Valproic Acid/Divalproex',b:'Depakene/Depakote, Convulex',cls:'mood',note:'Acute mania; also anticonvulsant; teratogenic (NTD)'},
+    {g:'Quetiapine',b:'Seroquel',cls:'ap_atyp',note:'FDA-approved for both mania AND bipolar depression'},
+    {g:'Olanzapine',b:'Zyprexa',cls:'ap_atyp',note:'Acute mania; olanzapine-fluoxetine combo for bipolar depression'},
+  ],
+  second:[
+    {g:'Lamotrigine',b:'Lamictal',cls:'anti',note:'BEST for bipolar depression prevention; slow titration to prevent SJS'},
+    {g:'Carbamazepine',b:'Tegretol',cls:'anti',note:'Acute mania; induces CYP450 enzymes'},
+    {g:'Aripiprazole',b:'Abilify',cls:'ap_atyp',note:'Acute mania; low metabolic SE'},
+    {g:'Risperidone',b:'Risperdal',cls:'ap_atyp',note:'Acute mania adjunct'},
+    {g:'Oxcarbazepine',b:'Trileptal',cls:'anti',note:'Alternative to carbamazepine; fewer drug interactions'},
+  ],
+  od:[
+    'Lithium toxicity (>1.5 mEq/L): tremor, ataxia, confusion, seizures → IV Normal Saline, sodium polystyrene (Kayexalate), DIALYSIS if severe (>4 mEq/L)',
+    'Valproate OD: L-Carnitine 100mg/kg IV, supportive, activated charcoal',
+    'Lamotrigine OD: seizure risk → benzodiazepines, supportive',
+    'Carbamazepine OD: diltiazem (blocks absorption), activated charcoal',
+  ],
+  note:'<strong>NEVER give antidepressant alone</strong> in bipolar — triggers manic switch. Lithium monitoring: levels, renal function, thyroid (hypothyroidism risk), ECG. <strong>Lamotrigine + Valproate:</strong> reduce Lamotrigine dose by 50% (Valproate doubles Lamotrigine levels → SJS risk).',
+  refs:['APA Bipolar Guidelines','BAP Guidelines','MIMS Philippines','DOH Philippines']
+},
+{
+  id:'dysthymia',icon:'🌥️',title:'Persistent Depressive Disorder (Dysthymia)',
+  subtitle:'Chronic low-grade depression ≥2 years',
+  dsm:'DSM-5: F34.1',category:'mood',dsmchange:true,
+  dsmchangeNote:'DSM-IV: Dysthymia (separate) → DSM-5: Persistent Depressive Disorder (merged with chronic MDD)',
+  color:{bg:'#EEF6FF',border:'#B8D8F8',acc:'#0d4a9a',ib:'#DCEEFF',ibl:'#0a336e',pill:'#DCEEFF',pt:'#0d3c7a',pill2:'#FFF5CC',pt2:'#7A5A00'},
+  illness:{
+    desc:'Depressed mood most of the day, more days than not, for ≥2 years. Less severe than MDD but more chronic. Can have "double depression" (MDD superimposed on dysthymia).',
+    hallmarks:['Low mood most of the day, more days than not','≥2: poor appetite/overeating, insomnia/hypersomnia, low energy, poor concentration, hopelessness','Never symptom-free for >2 months'],
+    duration:'≥2 years adults; ≥1 year children/adolescents',
+    phnote:'Often goes undiagnosed in PH; mistaken for "character" or cultural/social adaptation.'
+  },
+  first:[
+    {g:'Sertraline',b:'Zoloft, Serloft',cls:'ssri',note:'First choice for chronic depression'},
+    {g:'Fluoxetine',b:'Prozac, Lovan',cls:'ssri',note:'Long half-life beneficial for compliance'},
+    {g:'Escitalopram',b:'Lexapro',cls:'ssri',note:'Well tolerated long-term'},
+  ],
+  second:[
+    {g:'Venlafaxine',b:'Effexor XR',cls:'snri',note:'For SSRI non-responders'},
+    {g:'Mirtazapine',b:'Remeron',cls:'other',note:'Good if comorbid insomnia/weight loss'},
+  ],
+  od:['Same as MDD — see SSRI/SNRI OD management above'],
+  note:'<strong>Psychotherapy (CBT, IPT) is equally effective</strong> and often preferred for dysthymia. Combination therapy (med + therapy) most effective for PDD.',
+  refs:['DSM-5','APA','NICE CG90']
+},
+{
+  id:'cyclothymia',icon:'🔃',title:'Cyclothymic Disorder',
+  subtitle:'Subthreshold mood cycling ≥2 years',
+  dsm:'DSM-5: F34.0',category:'mood',dsmchange:false,
+  color:{bg:'#EEF6FF',border:'#B8D8F8',acc:'#0d4a9a',ib:'#DCEEFF',ibl:'#0a336e',pill:'#DCEEFF',pt:'#0d3c7a',pill2:'#7A5A00'},
+  illness:{
+    desc:'Numerous periods of hypomanic sx AND depressive sx that do NOT meet full criteria for hypomania or MDD. Continuous for ≥2 years. Risk factor for Bipolar I or II.',
+    hallmarks:['Hypomanic sx (below threshold)','Depressive sx (below MDD threshold)','Never symptom-free >2 months','Elevated risk for Bipolar disorder'],
+    duration:'≥2 years (≥1 year in children)',
+    phnote:'Monitor closely — 15–50% risk of progressing to Bipolar I or II.'
+  },
+  first:[
+    {g:'Lithium',b:'Eskalith',cls:'mood',note:'Mood stabilization'},
+    {g:'Valproate',b:'Depakene',cls:'mood',note:'Alternative mood stabilizer'},
+  ],
+  second:[
+    {g:'Lamotrigine',b:'Lamictal',cls:'anti',note:'Particularly for depressive phase'},
+    {g:'Psychotherapy (CBT)',b:'—',cls:'other',note:'Primary treatment'},
+  ],
+  od:['Lithium OD: dialysis, IV NS; Valproate OD: L-Carnitine'],
+  note:'Antidepressant monotherapy should be AVOIDED — risk of triggering hypomanic/manic switch.',
+  refs:['DSM-5','APA','UpToDate']
+},
+// ===== ANXIETY =====
+{
+  id:'gad',icon:'😰',title:'Generalized Anxiety Disorder (GAD)',
+  subtitle:'Excessive uncontrollable worry ≥6 months, ≥3 symptoms',
+  dsm:'DSM-5: F41.1',category:'anxiety',dsmchange:false,
+  color:{bg:'#EDFBF5',border:'#B5EAD7',acc:'#1a6b4a',ib:'#C8F5E4',ibl:'#0a4a2e',pill:'#C8F5E4',pt:'#1a5c42',pill2:'#FFF5CC',pt2:'#7A5A00'},
+  illness:{
+    desc:'Excessive, difficult-to-control anxiety about multiple domains (work, health, family) for ≥6 months. Somatic symptoms include muscle tension, fatigue, sleep disturbance.',
+    hallmarks:['≥3 of: restlessness, easy fatigue, poor concentration, irritability, muscle tension, sleep disturbance','Worry is DIFFICULT TO CONTROL','Significant functional impairment'],
+    duration:'≥6 months',
+    phnote:'Highly comorbid with MDD in PH. Buspirone preferred for long-term use due to no dependence risk.'
+  },
+  first:[
+    {g:'Escitalopram',b:'Lexapro, Cipralex',cls:'ssri',note:'First-line FDA-approved for GAD'},
+    {g:'Sertraline',b:'Zoloft',cls:'ssri',note:'Commonly used in PH setting'},
+    {g:'Venlafaxine XR',b:'Effexor XR',cls:'snri',note:'FDA-approved for GAD; effective for somatic sx'},
+    {g:'Buspirone',b:'Buspar, Ansial',cls:'buspirone',note:'Non-habit forming; no withdrawal; takes 2–4 weeks to work; PREFERRED long-term PH'},
+  ],
+  second:[
+    {g:'Duloxetine',b:'Cymbalta',cls:'snri',note:'FDA-approved for GAD; also for pain'},
+    {g:'Paroxetine',b:'Paxil',cls:'ssri',note:'FDA-approved; avoid in elderly (anticholinergic)'},
+    {g:'Diazepam',b:'Valium, Stedon',cls:'benzo',note:'Short-term only (≤4 weeks); PH DOH EML'},
+    {g:'Hydroxyzine',b:'Atarax, Vistaril',cls:'other',note:'Non-addictive antihistamine anxiolytic; PRN use; safe in PH'},
+  ],
+  od:[
+    'Benzo OD: respiratory depression → Flumazenil (Anexate) 0.2mg IV, repeat q1min (max 3mg); airway management',
+    'SSRI OD: serotonin syndrome → Cyproheptadine, cooling measures, BZD for agitation',
+    'Buspirone OD: supportive (no antidote needed)',
+  ],
+  note:'<strong>Buspirone:</strong> NOT for PRN use — must be taken regularly; no immediate anxiolytic effect. <strong>Benzodiazepines:</strong> avoid >4 weeks — physical dependence. Hydroxyzine is an excellent PRN adjunct with no abuse potential.',
+  refs:['NICE CG113','APA GAD Guidelines','DOH Philippines','MIMS Philippines']
+},
+{
+  id:'panic',icon:'💥',title:'Panic Disorder',
+  subtitle:'Recurrent unexpected panic attacks + anticipatory anxiety',
+  dsm:'DSM-5: F41.0',category:'anxiety',dsmchange:false,
+  color:{bg:'#EDFBF5',border:'#B5EAD7',acc:'#1a6b4a',ib:'#C8F5E4',ibl:'#0a4a2e',pill:'#C8F5E4',pt:'#1a5c42',pill2:'#FFF5CC',pt2:'#7A5A00'},
+  illness:{
+    desc:'Recurrent UNEXPECTED panic attacks (intense fear reaching peak in minutes) with ≥1 month of anticipatory anxiety or behavioral change. Panic attacks: palpitations, sweating, trembling, SOB, chest pain, derealization, fear of dying/going crazy.',
+    hallmarks:['UNEXPECTED onset (no trigger)','≥4 of 13 physical/cognitive symptoms','Anticipatory anxiety or agoraphobia after attacks','At least 1 month of concern or behavioral change'],
+    duration:'Ongoing pattern; individual attacks peak within 10 min',
+    phnote:'Often presents to ER/OPD as cardiac emergency. Common in healthcare workers in PH.'
+  },
+  first:[
+    {g:'Sertraline',b:'Zoloft',cls:'ssri',note:'First-line; start LOW dose to avoid initial anxiety worsening'},
+    {g:'Fluoxetine',b:'Prozac',cls:'ssri',note:'Effective; longer titration period needed'},
+    {g:'Paroxetine',b:'Paxil',cls:'ssri',note:'FDA-approved for panic disorder'},
+    {g:'Alprazolam',b:'Xanax, Xanor',cls:'benzo',note:'Acute/bridging therapy ONLY; high dependence risk — use with caution PH'},
+  ],
+  second:[
+    {g:'Clonazepam',b:'Rivotril, Klonopin',cls:'benzo',note:'Longer half-life than alprazolam; fewer interdose anxiety episodes'},
+    {g:'Venlafaxine XR',b:'Effexor XR',cls:'snri',note:'Alternative to SSRI; FDA-approved for panic'},
+    {g:'Imipramine',b:'Tofranil',cls:'tca',note:'Effective but cardiac SE limit use'},
+    {g:'CBT with interoceptive exposure',b:'—',cls:'other',note:'Gold standard psychotherapy'},
+  ],
+  od:[
+    'Benzo OD: Flumazenil IV; respiratory support',
+    'SSRI OD: serotonin syndrome protocol — Cyproheptadine, cooling, BZD',
+  ],
+  note:'<strong>Start SSRIs at HALF the usual dose</strong> — initial anxiety worsening ("jitteriness syndrome") can trigger panic. Always combine with psychoeducation and CBT.',
+  refs:['APA','NICE','MIMS PH','UpToDate']
+},
+{
+  id:'social-anxiety',icon:'👥',title:'Social Anxiety Disorder / Specific Phobia / Agoraphobia',
+  subtitle:'Fear of social scrutiny, objects/situations, or open places',
+  dsm:'DSM-5: F40',category:'anxiety',dsmchange:false,
+  color:{bg:'#EDFBF5',border:'#B5EAD7',acc:'#1a6b4a',ib:'#C8F5E4',ibl:'#0a4a2e',pill:'#C8F5E4',pt:'#1a5c42',pill2:'#FFF5CC',pt2:'#7A5A00'},
+  illness:{
+    desc:'Social Anxiety: marked fear of social situations with scrutiny. Specific Phobia: fear of specific object/situation (blood, needles, heights, animals). Agoraphobia: fear of places where escape is difficult (open spaces, crowds, public transport).',
+    hallmarks:['Social Anxiety: fear of negative evaluation, embarrassment','Specific Phobia: immediate anxiety + avoidance of trigger','Agoraphobia: ≥2 of 5 situations (open spaces, enclosed places, lines/crowds, outside alone, public transport)','Fear out of proportion to actual danger'],
+    duration:'≥6 months',
+    phnote:'Specific phobia of blood-injection-injury: vasovagal response; patient faints rather than panics — key differentiator in PNLE.'
+  },
+  first:[
+    {g:'Sertraline',b:'Zoloft',cls:'ssri',note:'Social Anxiety — first choice'},
+    {g:'Paroxetine',b:'Paxil',cls:'ssri',note:'FDA-approved for social anxiety'},
+    {g:'Propranolol',b:'Inderal',cls:'other',note:'Performance anxiety (situational) — PRN; beta-blocker for tremor, palpitations'},
+    {g:'Exposure Therapy/CBT',b:'—',cls:'other',note:'GOLD STANDARD for all phobias'},
+  ],
+  second:[
+    {g:'Venlafaxine XR',b:'Effexor XR',cls:'snri',note:'FDA-approved social anxiety'},
+    {g:'Clonazepam',b:'Rivotril',cls:'benzo',note:'Short-term adjunct; social anxiety'},
+    {g:'Gabapentin',b:'Neurontin',cls:'other',note:'Social anxiety; off-label'},
+  ],
+  od:[
+    'Propranolol OD: severe bradycardia, hypotension → Atropine, IV Glucagon (reverses beta-blockade), IV fluids',
+    'Benzo OD: Flumazenil, respiratory support',
+  ],
+  note:'Specific phobia treatment = <strong>Systematic Desensitization</strong> (Wolpe) — pharmacotherapy rarely needed. Agoraphobia without panic disorder: consider cognitive restructuring + in-vivo exposure.',
+  refs:['APA','NICE CG159','DSM-5','MIMS PH']
+},
+// ===== OCD =====
+{
+  id:'ocd',icon:'🔁',title:'OCD & Related Disorders',
+  subtitle:'Obsessions, compulsions, BDD, hoarding, trichotillomania, excoriation',
+  dsm:'DSM-5: F42',category:'ocd',dsmchange:true,
+  dsmchangeNote:'DSM-5: OCD moved OUT of anxiety disorders chapter into its own chapter. Added: Hoarding D/O, Excoriation D/O, BDD expanded.',
+  color:{bg:'#EDFBF5',border:'#B5EAD7',acc:'#1a6b4a',ib:'#C8F5E4',ibl:'#0a4a2e',pill:'#C8F5E4',pt:'#1a5c42',pill2:'#FFF5CC',pt2:'#7A5A00'},
+  illness:{
+    desc:'OCD: recurrent obsessions (intrusive thoughts) and/or compulsions (repetitive behaviors) causing significant distress, time-consuming (>1 hr/day). Ego-dystonic. Insight specifier: good, poor, or absent.',
+    hallmarks:['Obsessions: recurrent, intrusive, unwanted thoughts','Compulsions: repetitive behaviors/mental acts to reduce anxiety','EGO-DYSTONIC (unwanted — unlike OCPD which is ego-syntonic)','BDD: preoccupation with perceived physical defect','Hoarding: difficulty discarding possessions','Trichotillomania: hair pulling; Excoriation: skin picking'],
+    duration:'Time-consuming (>1 hr/day) or significant distress',
+    phnote:'Higher SSRI doses needed for OCD than depression. ERP (Exposure & Response Prevention) is the gold standard psychotherapy.'
+  },
+  first:[
+    {g:'Fluvoxamine',b:'Luvox, Faverin',cls:'ssri',note:'FDA-indicated specifically for OCD; also for BDD'},
+    {g:'Fluoxetine',b:'Prozac',cls:'ssri',note:'High dose needed: 40–80mg (vs 20mg for depression)'},
+    {g:'Sertraline',b:'Zoloft',cls:'ssri',note:'FDA-approved for OCD; pediatric use approved'},
+    {g:'Paroxetine',b:'Paxil',cls:'ssri',note:'FDA-approved for OCD'},
+  ],
+  second:[
+    {g:'Clomipramine',b:'Anafranil',cls:'tca',note:'Most effective drug for OCD; SNRI-like; cardiac SE limits first-line use'},
+    {g:'Venlafaxine',b:'Effexor XR',cls:'snri',note:'Off-label; alternative if SSRIs fail'},
+    {g:'Risperidone',b:'Risperdal',cls:'ap_atyp',note:'Augmentation for partial responders'},
+    {g:'Haloperidol',b:'Haldol',cls:'ap_typ',note:'Augmentation especially if tics present (Tourette\'s-OCD)'},
+  ],
+  od:[
+    'Clomipramine OD (TCA): QRS widening → NaHCO₃ IV, Mg Sulfate; QTc monitoring; LIFE-THREATENING',
+    'SSRI OD: serotonin syndrome → Cyproheptadine, cooling measures, BZD',
+  ],
+  note:'<strong>Minimum 12-week trial</strong> before declaring failure. ERP (Exposure & Response Prevention) is gold standard psychotherapy. <strong>Hoarding D/O:</strong> responds poorly to meds; therapy (CBT-H) is primary. <strong>Clomipramine:</strong> most effective drug but cardiac monitoring needed.',
+  refs:['IOCDF Guidelines','APA','NICE OCD CG31','MIMS PH']
+},
+// ===== TRAUMA =====
+{
+  id:'ptsd',icon:'🪖',title:'PTSD & Acute Stress Disorder',
+  subtitle:'Trauma-related intrusions, avoidance, hyperarousal, negative cognitions',
+  dsm:'DSM-5: F43.1/F43.0',category:'trauma',dsmchange:true,
+  dsmchangeNote:'DSM-5: PTSD moved to Trauma & Stressor-Related chapter (was Anxiety). Added Criterion D (negative cognitions/mood), dissociative subtype. Criterion A (stressor) revised.',
+  color:{bg:'#EDFBF5',border:'#B5EAD7',acc:'#1a6b4a',ib:'#C8F5E4',ibl:'#0a4a2e',pill:'#C8F5E4',pt:'#1a5c42',pill2:'#FFF5CC',pt2:'#7A5A00'},
+  illness:{
+    desc:'PTSD: >1 month following exposure to traumatic event. 4 clusters: intrusion, avoidance, negative alterations in cognitions/mood, hyperarousal. Acute Stress Disorder: 3 days–1 month post-trauma.',
+    hallmarks:['B: Intrusion (flashbacks, nightmares, distress to cues)','C: Avoidance (trauma-related thoughts/external reminders)','D: Negative cognitions/mood (NEW DSM-5 criterion)','E: Hyperarousal (hypervigilance, exaggerated startle, sleep disturbance)','Dissociative subtype: depersonalization/derealization'],
+    duration:'>1 month (ASD: 3 days–1 month)',
+    phnote:'In PH: typhoons (Hainan/Yolanda), mass casualty events, military combat are common PTSD precipitants. Debriefing: DO NOT do single-session psychological debriefing.'
+  },
+  first:[
+    {g:'Sertraline',b:'Zoloft',cls:'ssri',note:'FDA-approved for PTSD; first choice'},
+    {g:'Paroxetine',b:'Paxil',cls:'ssri',note:'FDA-approved for PTSD'},
+    {g:'Trauma-focused CBT (TF-CBT)',b:'—',cls:'other',note:'Gold standard psychotherapy'},
+    {g:'EMDR',b:'—',cls:'other',note:'Eye Movement Desensitization & Reprocessing — equally effective'},
+  ],
+  second:[
+    {g:'Venlafaxine',b:'Effexor XR',cls:'snri',note:'Effective for PTSD; not FDA-approved'},
+    {g:'Prazosin',b:'Minipress',cls:'other',note:'Alpha-1 blocker; specifically for PTSD NIGHTMARES; NOT an antidepressant'},
+    {g:'Mirtazapine',b:'Remeron',cls:'other',note:'Comorbid insomnia/appetite loss'},
+    {g:'Propranolol',b:'Inderal',cls:'other',note:'Acute phase — may reduce memory consolidation of trauma'},
+  ],
+  od:[
+    'SSRI OD: serotonin syndrome → Cyproheptadine, cooling, IV BZD',
+    'Prazosin OD: severe hypotension → IV fluids, Norepinephrine/vasopressors if refractory',
+  ],
+  note:'<strong>Prazosin</strong> is specifically indicated for PTSD-related nightmares/sleep disturbance (not a general antidepressant). <strong>EMDR:</strong> especially effective for single-incident trauma. WHO mhGAP recommends trauma-focused therapy as primary in LMIC settings like PH.',
+  refs:['APA PTSD Guidelines 2017','WHO mhGAP','DOH Philippines','MIMS PH']
+},
+// ===== NEUROCOGNITIVE =====
+{
+  id:'alzheimers',icon:'🧩',title:"Alzheimer's & Neurocognitive Disorders",
+  subtitle:'Progressive cognitive decline: Alzheimer\'s, Vascular, LBD, FTD',
+  dsm:'DSM-5: F00/G30',category:'neuro',dsmchange:true,
+  dsmchangeNote:'DSM-IV: Dementia → DSM-5: Major Neurocognitive Disorder. Added "Mild NCD" (formerly MCI). Subtypes specified: Alzheimer\'s, Vascular, LBD, FTD, TBI, Prion, HIV.',
+  color:{bg:'#FFF5EC',border:'#FFDAB9',acc:'#a04a10',ib:'#FFE8CC',ibl:'#7a3200',pill:'#FFE8CC',pt:'#8B3E00',pill2:'#FFF5CC',pt2:'#7A5A00'},
+  illness:{
+    desc:'Major NCD: significant cognitive decline from previous level in ≥1 domain (memory, language, executive, perceptual-motor, social cognition), interfering with daily function. Mild NCD: modest decline, independence maintained.',
+    hallmarks:['Alzheimer\'s (most common): insidious onset, gradual progression, memory most affected first','Vascular NCD: stepwise decline, focal neuro signs, CV risk factors','LBD (Lewy Body): fluctuating cognition + parkinsonism + visual hallucinations (REM sleep disorder)','FTD (Frontotemporal): personality/behavior change first, younger onset','BPSD: behavioral & psychological symptoms of dementia'],
+    duration:'Progressive; no reversibility (vs. delirium which is reversible)',
+    phnote:'Donepezil is on DOH EML. Distinguish from DELIRIUM: dementia = chronic, insidious, no LOC; Delirium = acute, fluctuating, inattention, reversible.'
+  },
+  first:[
+    {g:'Donepezil',b:'Aricept',cls:'cholinest',note:'All stages; once daily; DOH EML; mild–severe Alzheimer\'s'},
+    {g:'Rivastigmine',b:'Exelon',cls:'cholinest',note:'Also for Parkinson\'s dementia; patch formulation available'},
+    {g:'Galantamine',b:'Reminyl, Razadyne',cls:'cholinest',note:'Mild–moderate Alzheimer\'s; dual mechanism (ChEI + nicotinic modulation)'},
+  ],
+  second:[
+    {g:'Memantine',b:'Namenda, Ebixa',cls:'nmda',note:'Moderate–severe Alzheimer\'s; NMDA glutamate antagonist; neuroprotective'},
+    {g:'Donepezil + Memantine',b:'Aricept + Namenda',cls:'other',note:'Combination for moderate–severe; additive benefit'},
+    {g:'Risperidone (low dose)',b:'Risperdal',cls:'ap_atyp',note:'BPSD (agitation, aggression, psychosis); BLACK BOX: increased mortality in elderly'},
+    {g:'Quetiapine (low dose)',b:'Seroquel',cls:'ap_atyp',note:'Preferred in LBD (avoid typical AP — severe sensitivity)'},
+  ],
+  od:[
+    'ChEI OD (Cholinergic crisis): bradycardia, salivation, lacrimation, urination, defecation → Atropine IV',
+    'Memantine OD: supportive care (no antidote); monitor CNS, CV',
+    'Antipsychotic OD in elderly: QTc prolongation, sedation, falls → supportive',
+  ],
+  note:'<strong>AVOID anticholinergics</strong> in dementia (worsen cognition). <strong>LBD:</strong> AVOID typical antipsychotics (haloperidol) — severe, potentially fatal sensitivity reaction. For Vascular NCD: treat CV risk factors (HTN, DM, dyslipidemia). <strong>No drug stops progression.</strong>',
+  refs:["Alzheimer's Association","APA Dementia Guidelines","DOH EML Philippines","MIMS PH"]
+},
+{
+  id:'delirium',icon:'🌪️',title:'Delirium',
+  subtitle:'Acute brain failure: inattention + fluctuating consciousness',
+  dsm:'DSM-5: F05',category:'neuro',dsmchange:false,
+  color:{bg:'#FFF5EC',border:'#FFDAB9',acc:'#a04a10',ib:'#FFE8CC',ibl:'#7a3200',pill:'#FFE8CC',pt:'#8B3E00',pill2:'#FFF5CC',pt2:'#7A5A00'},
+  illness:{
+    desc:'Acute disturbance in attention and awareness with additional cognitive change. Develops over hours to days, fluctuates. Due to medical condition, substance intoxication/withdrawal, or multiple causes. REVERSIBLE.',
+    hallmarks:['ACUTE onset, FLUCTUATING course','Inattention (hallmark)','Disorganized thinking, altered level of consciousness','Subtypes: hyperactive (agitated), hypoactive (quiet — often missed!), mixed','WITS mnemonic: Wakefulness fluctuating, Inattention, Thinking disorganized, Sleep-wake disturbance'],
+    duration:'Hours to days; REVERSIBLE with treatment of cause',
+    phnote:'ICU delirium extremely common. Hypoactive delirium often mistaken for depression. CAM (Confusion Assessment Method) used in PH hospitals.'
+  },
+  first:[
+    {g:'Haloperidol',b:'Haldol',cls:'ap_typ',note:'Gold standard for delirium agitation; IV/IM/PO; monitor QTc'},
+    {g:'Treat UNDERLYING CAUSE',b:'—',cls:'other',note:'Primary management: infection, metabolic, pain, constipation, medications'},
+    {g:'Lorazepam',b:'Ativan',cls:'benzo',note:'ONLY for alcohol/benzo withdrawal delirium; avoid in others (worsens)'},
+  ],
+  second:[
+    {g:'Quetiapine',b:'Seroquel',cls:'ap_atyp',note:'Low-dose; particularly in ICU; Parkinson\'s patients'},
+    {g:'Olanzapine',b:'Zyprexa',cls:'ap_atyp',note:'ODT formulation useful'},
+    {g:'Risperidone',b:'Risperdal',cls:'ap_atyp',note:'Alternative; low-dose'},
+  ],
+  od:['Haloperidol OD: QTc prolongation → Mg Sulfate, monitor cardiac; EPS → Biperiden','Benzo OD: Flumazenil, airway management'],
+  note:'<strong>Non-pharmacological FIRST:</strong> reorientation, familiar objects, adequate lighting, early mobilization, sleep hygiene. Delirium ≠ Dementia: delirium is ACUTE, REVERSIBLE, inattention is hallmark.',
+  refs:['APA Delirium Guidelines','CAM Instrument','DOH Philippines']
+},
+// ===== SUBSTANCE =====
+{
+  id:'alcohol',icon:'🍺',title:'Alcohol Use Disorder',
+  subtitle:'Dependence, tolerance, withdrawal, Wernicke-Korsakoff',
+  dsm:'DSM-5: F10',category:'substance',dsmchange:true,
+  dsmchangeNote:'DSM-5: Abuse & Dependence (2 separate) → Single "Use Disorder" (mild/moderate/severe). Eliminated legal problems criterion; added craving.',
+  color:{bg:'#FFF1F2',border:'#FFCDD2',acc:'#9a1a1a',ib:'#FFE0E3',ibl:'#7a0010',pill:'#FFE0E3',pt:'#8B0010',pill2:'#FFF5CC',pt2:'#7A5A00'},
+  illness:{
+    desc:'Problematic pattern of alcohol use causing significant impairment in ≥2 of 11 criteria within 12 months. Severity: mild (2–3), moderate (4–5), severe (≥6). Withdrawal can be FATAL.',
+    hallmarks:['Tolerance, withdrawal sx, loss of control, time spent, craving, role failure, interpersonal problems, hazardous use, given up activities, continued despite problems','Withdrawal: 6–24h: tremor, diaphoresis, anxiety; 12–48h: seizures; 48–72h: DTs (Delirium Tremens)','Wernicke: confusion + ophthalmoplegia + ataxia (Wernicke Triad) → can progress to Korsakoff (confabulation, amnesia)'],
+    duration:'12-month pattern; withdrawal timeline critical',
+    phnote:'CIWA-Ar scale standard in PH hospitals for withdrawal assessment. Thiamine ALWAYS before glucose to prevent Wernicke\'s.'
+  },
+  first:[
+    {g:'THIAMINE (Vit B1)',b:'Betaxin, Neurobion',cls:'other',note:'⚠️ FIRST BEFORE GLUCOSE — prevents Wernicke\'s encephalopathy; 100mg IV/IM'},
+    {g:'Diazepam',b:'Valium, Stedon',cls:'benzo',note:'PREFERRED for alcohol withdrawal (long-acting, self-taper)'},
+    {g:'Lorazepam',b:'Ativan',cls:'benzo',note:'Alternative in liver disease (no hepatic metabolism)'},
+    {g:'Chlordiazepoxide',b:'Librium',cls:'benzo',note:'Classic alcohol withdrawal agent; long half-life'},
+    {g:'Naltrexone',b:'Revia, Vivitrol',cls:'antag',note:'Reduces craving/relapse; monthly IM injection available'},
+  ],
+  second:[
+    {g:'Acamprosate',b:'Campral',cls:'other',note:'Reduces cravings; GABAergic; avoid in renal failure'},
+    {g:'Disulfiram',b:'Antabuse',cls:'other',note:'Aversion therapy: alcohol + disulfiram = flushing, vomiting, tachycardia; PATIENT MUST CONSENT'},
+    {g:'Gabapentin',b:'Neurontin',cls:'anti',note:'Withdrawal off-label; also reduces alcohol craving'},
+    {g:'Baclofen',b:'Lioresal',cls:'other',note:'GABA-B agonist; craving reduction; evidence growing'},
+  ],
+  od:[
+    'Alcohol intoxication: supportive (airway, position), monitor BG (hypoglycemia)',
+    'Disulfiram reaction: IV fluids, antihistamines (Diphenhydramine), O₂, Epinephrine if anaphylaxis',
+    'Wernicke: Thiamine 500mg IV TID x 3 days → then 250mg OD x 5 days (Pabrinex protocol)',
+    'DTs: IV Diazepam titrated, ICU-level monitoring',
+  ],
+  note:'<strong>CIWA-Ar scale</strong> guides withdrawal management. DTs = MEDICAL EMERGENCY (mortality 5–15% untreated). <strong>Korsakoff syndrome</strong>: anterograde + retrograde amnesia + confabulation — may be irreversible.',
+  refs:['ASAM Guidelines','DOH Philippines MH Program','WHO mhGAP','MIMS PH']
+},
+{
+  id:'opioid',icon:'💊',title:'Opioid Use Disorder',
+  subtitle:'Dependence, tolerance, withdrawal, overdose',
+  dsm:'DSM-5: F11',category:'substance',dsmchange:false,
+  color:{bg:'#FFF1F2',border:'#FFCDD2',acc:'#9a1a1a',ib:'#FFE0E3',ibl:'#7a0010',pill:'#FFE0E3',pt:'#8B0010',pill2:'#FFF5CC',pt2:'#7A5A00'},
+  illness:{
+    desc:'Opioids include heroin, morphine, codeine, oxycodone, fentanyl. OUD characterized by tolerance, withdrawal, craving, and continued use despite consequences. COWS scale monitors withdrawal.',
+    hallmarks:['Intoxication: euphoria, drowsiness, slurred speech, miosis (pinpoint pupils), respiratory depression','Withdrawal (COWS): dysphoria, N/V/D, muscle aches, gooseflesh, yawning, rhinorrhea, insomnia','Overdose triad: unconsciousness + pinpoint pupils + respiratory depression'],
+    duration:'Withdrawal peaks 36–72h (heroin); longer for methadone',
+    phnote:'DDB regulates methadone maintenance in PH (ARPP — Addiction Rehabilitation Program). RA 9165 governs drug offenses.'
+  },
+  first:[
+    {g:'Methadone',b:'Dolophine, Methadose',cls:'opioid',note:'DDB-certified centers only PH; once-daily; ARPP program'},
+    {g:'Buprenorphine/Naloxone',b:'Suboxone, Subutex',cls:'opioid',note:'Partial opioid agonist; sublingual; ceiling effect limits OD risk'},
+    {g:'Naltrexone',b:'Revia, Vivitrol',cls:'antag',note:'Opioid antagonist; abstinence-based maintenance; monthly IM available'},
+  ],
+  second:[
+    {g:'Clonidine',b:'Catapres',cls:'other',note:'Alpha-2 agonist; manages withdrawal sx (N/V, cramps, anxiety); NOT a substitute'},
+    {g:'Loperamide',b:'Imodium',cls:'other',note:'Diarrhea from withdrawal'},
+    {g:'NSAIDs (Ibuprofen)',b:'Advil, Nurofen',cls:'other',note:'Muscle aches from withdrawal'},
+    {g:'Hydroxyzine',b:'Atarax',cls:'other',note:'Anxiety/insomnia during withdrawal'},
+  ],
+  od:[
+    '⚠️ NALOXONE (NARCAN) = SPECIFIC ANTIDOTE: 0.4–2mg IM/IV/intranasal; repeat q2–3 min; max 10mg',
+    'Airway management: position, O₂, intubation if needed',
+    'Monitor for re-narcotization (naloxone half-life shorter than most opioids)',
+    'IV access, supportive care; hospital observation ≥4 hours',
+  ],
+  note:'<strong>Naloxone = #1 priority in opioid OD.</strong> COWS (Clinical Opioid Withdrawal Scale) used for monitoring. Buprenorphine: START only when patient in MILD–MODERATE withdrawal (COWS ≥8) to avoid precipitated withdrawal.',
+  refs:['DDB Philippines','ASAM','WHO mhGAP','DOH ARPP','RA 9165']
+},
+{
+  id:'stimulant',icon:'🔥',title:'Stimulant Use Disorder (Shabu/Meth, Cocaine)',
+  subtitle:'Methamphetamine, cocaine — PH #1 illicit substance',
+  dsm:'DSM-5: F15',category:'substance',dsmchange:false,
+  color:{bg:'#FFF1F2',border:'#FFCDD2',acc:'#9a1a1a',ib:'#FFE0E3',ibl:'#7a0010',pill:'#FFE0E3',pt:'#8B0010',pill2:'#FFF5CC',pt2:'#7A5A00'},
+  illness:{
+    desc:'Methamphetamine (shabu in PH) is #1 illicit drug in Philippines. Stimulant intoxication: euphoria, alertness, decreased appetite, hyperthermia. Withdrawal: dysphoria, fatigue, hypersomnia, increased appetite, craving.',
+    hallmarks:['Intoxication: euphoria, agitation, dilated pupils (mydriasis), tachycardia, HTN, hyperthermia','Meth psychosis: paranoia, hallucinations (auditory + visual), delusions — MIMICS SCHIZOPHRENIA','Withdrawal: "crash" — dysphoria, fatigue, hypersomnia, depression','Cocaine: shorter duration; cardiac risk (MI, arrhythmia)'],
+    duration:'Meth psychosis may persist weeks after stopping',
+    phnote:'RA 9165 mandates psychosocial rehabilitation. LGU-based Mamamayang Ayaw sa Anomalya (MASA) programs.'
+  },
+  first:[
+    {g:'NO FDA-approved pharmacotherapy',b:'—',cls:'other',note:'Psychosocial treatment is primary (Contingency Management, CBT)'},
+    {g:'Haloperidol',b:'Haldol',cls:'ap_typ',note:'Acute meth psychosis/agitation'},
+    {g:'Risperidone',b:'Risperdal',cls:'ap_atyp',note:'Meth-induced psychosis; lower EPS than typical AP'},
+    {g:'Lorazepam/Diazepam',b:'Ativan/Valium',cls:'benzo',note:'Acute agitation; benzodiazepine'},
+  ],
+  second:[
+    {g:'Bupropion',b:'Wellbutrin',cls:'other',note:'Modest evidence for meth/cocaine; reduces use'},
+    {g:'Mirtazapine',b:'Remeron',cls:'other',note:'Emerging evidence for meth cravings'},
+    {g:'Naltrexone',b:'Revia',cls:'antag',note:'Some evidence for cocaine'},
+  ],
+  od:[
+    'Meth OD: agitation → IV/IM Benzodiazepines; HTN → Phentolamine/Labetalol; hyperthermia → cooling blankets, IV fluids',
+    'NO ANTIDOTE — supportive care',
+    'Cocaine OD: Benzodiazepines for agitation, seizures; AVOID beta-blockers (paradoxical HTN); Nitroglycerin for chest pain',
+    'Cardiac monitoring; ICU if severe',
+  ],
+  note:'<strong>Meth psychosis ≠ Schizophrenia:</strong> meth psychosis usually resolves within weeks of abstinence; schizophrenia is chronic. Timeline of drug use is KEY diagnostic clue. Do NOT use beta-blockers in cocaine OD (unopposed alpha effect → severe HTN).',
+  refs:['RA 9165 PH','DDB Philippines','NIDA','MIMS PH']
+},
+{
+  id:'cannabis',icon:'🌿',title:'Cannabis Use Disorder',
+  subtitle:'THC dependence, amotivational syndrome, CHS',
+  dsm:'DSM-5: F12',category:'substance',dsmchange:false,
+  color:{bg:'#FFF1F2',border:'#FFCDD2',acc:'#9a1a1a',ib:'#FFE0E3',ibl:'#7a0010',pill:'#FFE0E3',pt:'#8B0010',pill2:'#FFF5CC',pt2:'#7A5A00'},
+  illness:{
+    desc:'Cannabis (marijuana, "marijuana" in PH) is still illegal under RA 9165. Intoxication: euphoria, increased appetite, tachycardia, conjunctival injection, dry mouth, impaired coordination. Withdrawal: irritability, anxiety, insomnia.',
+    hallmarks:['Intoxication: euphoria, conjunctival injection (red eyes), increased appetite ("munchies"), impaired coordination','Cannabis Hyperemesis Syndrome (CHS): cyclic vomiting relieved by HOT SHOWERS — pathognomonic','Amotivational syndrome: chronic use','Withdrawal: irritability, anxiety, sleep disturbance, decreased appetite'],
+    duration:'Intoxication 2–4h; CHS can last days',
+    phnote:'Cannabis illegal in PH under RA 9165. Medical cannabis law (RA 11712) allows limited medicinal use for specific conditions.'
+  },
+  first:[
+    {g:'No FDA-approved pharmacotherapy',b:'—',cls:'other',note:'CBT, Motivational Interviewing are primary'},
+    {g:'Supportive care for CHS',b:'—',cls:'other',note:'Hot showers (symptomatic relief); Haloperidol IV (acute CHS)'},
+  ],
+  second:[
+    {g:'N-Acetylcysteine (NAC)',b:'Fluimucil',cls:'other',note:'Some evidence in adolescents; reduces use'},
+    {g:'Gabapentin',b:'Neurontin',cls:'anti',note:'Sleep and withdrawal symptoms'},
+    {g:'Quetiapine',b:'Seroquel',cls:'ap_atyp',note:'Sleep disturbance during withdrawal'},
+  ],
+  od:['Cannabis OD: generally not life-threatening; supportive care','Acute anxiety/paranoia: reassurance, calm environment, Lorazepam if needed','CHS in ER: Haloperidol 5mg IV, Lorazepam, IV hydration, Capsaicin cream topically'],
+  note:'<strong>CHS pathognomonic:</strong> cyclic vomiting + relief with HOT SHOWERS. Key PNLE differentiator. RA 11712 (Medical Cannabis in PH 2022) allows limited use for specific medical conditions under DOH regulation.',
+  refs:['RA 9165','RA 11712 PH','NIDA','DSM-5']
+},
+// ===== PERSONALITY =====
+{
+  id:'personality',icon:'🎭',title:'Personality Disorders — Full Cluster Review',
+  subtitle:'Cluster A (Odd), B (Dramatic), C (Anxious) — all disorders & hallmarks',
+  dsm:'DSM-5: F60',category:'personality',dsmchange:false,
+  color:{bg:'#FFF0F3',border:'#FFB3C6',acc:'#9c1a40',ib:'#FFD6E4',ibl:'#7a0030',pill:'#FFD6E4',pt:'#8B0035',pill2:'#FFF5CC',pt2:'#7A5A00'},
+  illness:{
+    desc:'Personality disorders are enduring, inflexible patterns of inner experience and behavior that deviate markedly from cultural expectations, are pervasive and stable, lead to distress or impairment. Onset adolescence/early adulthood.',
+    hallmarks:['Pervasive, inflexible, ego-syntonic (EXCEPT BPD which can be ego-dystonic)','Stable over time, onset adolescence/early adulthood','Significant distress or functional impairment','3 clusters based on predominant features'],
+    duration:'Longstanding; by definition pervasive across situations',
+    phnote:'No medications are FDA-approved for personality disorders themselves — treat TARGET SYMPTOMS. DBT (Dialectical Behavior Therapy) is gold standard for BPD.'
+  },
+  clusters:[
+    {
+      letter:'A', name:'Cluster A — "Weird/Odd"', color:'#E8F5E9', border:'#81C784', text:'#1b5e20',
+      tag:'Think: Psychosis-like; Social Detachment',
+      disorders:[
+        {name:'Paranoid PD',hallmark:'Pervasive distrust and suspicion; interprets others as malevolent',key:'Rule: Others have bad motives — no delusions (unlike paranoid schizophrenia)'},
+        {name:'Schizoid PD',hallmark:'Social detachment; restricted emotional expression; prefers solitude',key:'"Loner by choice" — no desire for relationships; flat affect; no psychosis'},
+        {name:'Schizotypal PD',hallmark:'Magical thinking, ideas of reference, odd perceptions, eccentric behavior, social isolation',key:'Closest to schizophrenia spectrum; magical thinking, odd speech; brief psychotic episodes possible'},
+      ]
+    },
+    {
+      letter:'B', name:'Cluster B — "Wild/Dramatic"', color:'#FCE4EC', border:'#F48FB1', text:'#880e4f',
+      tag:'Think: Emotional Dysregulation; Dramatic/Erratic',
+      disorders:[
+        {name:'Borderline PD (BPD)',hallmark:'Unstable relationships, identity, mood; impulsivity; fear of abandonment; self-harm; splitting',key:'"Favorite person" dynamic; splitting (all good/all bad); DBT gold standard; #1 PNLE personality focus'},
+        {name:'Antisocial PD (ASPD)',hallmark:'Pervasive violation of rights of others; deceitfulness; impulsivity; lack of remorse; ≥18 yo + conduct D/O before 15',key:'Must have conduct disorder history before 15; "con artist"; no remorse'},
+        {name:'Narcissistic PD (NPD)',hallmark:'Grandiosity, need for admiration, lack of empathy, sense of entitlement',key:'"Fragile ego under grandiosity"; responds to criticism with rage or shame'},
+        {name:'Histrionic PD (HPD)',hallmark:'Excessive emotionality and attention-seeking; provocative; shallow emotions; theatrical',key:'"Drama queen"; considers relationships more intimate than they are; seductive behavior'},
+      ]
+    },
+    {
+      letter:'C', name:'Cluster C — "Worried/Anxious"', color:'#E3F2FD', border:'#90CAF9', text:'#0d47a1',
+      tag:'Think: Fear-based; Anxiety-driven',
+      disorders:[
+        {name:'Avoidant PD',hallmark:'Social inhibition, feelings of inadequacy, hypersensitivity to rejection; WANTS relationships but avoids due to fear',key:'Unlike schizoid — WANTS relationships but too afraid; compare to social anxiety D/O'},
+        {name:'Dependent PD',hallmark:'Excessive need to be taken care of; submissive, clinging behavior; fear of separation',key:'"Please don\'t leave me" — difficulty making decisions; tolerates poor treatment to maintain relationship'},
+        {name:'OCPD',hallmark:'Preoccupation with orderliness, perfectionism, control; rigidity; EGO-SYNTONIC',key:'OCPD: ego-SYNTONIC (comfortable with it) vs OCD: ego-DYSTONIC (distressed by it) — KEY DIFFERENTIATOR'},
+      ]
+    }
+  ],
+  first:[
+    {g:'Valproate/Divalproex',b:'Depakene',cls:'mood',note:'BPD impulsivity; affective instability'},
+    {g:'SSRIs (Fluoxetine/Sertraline)',b:'Prozac/Zoloft',cls:'ssri',note:'BPD mood lability; OCPD; Avoidant PD anxiety'},
+    {g:'DBT (Dialectical Behavior Therapy)',b:'—',cls:'other',note:'BPD gold standard psychotherapy — skills training'},
+    {g:'Low-dose antipsychotic (Olanzapine)',b:'Zyprexa',cls:'ap_atyp',note:'Schizotypal PD; BPD cognitive-perceptual distortions'},
+  ],
+  second:[
+    {g:'Risperidone (low dose)',b:'Risperdal',cls:'ap_atyp',note:'Schizotypal; BPD dissociative sx'},
+    {g:'Naltrexone',b:'Revia',cls:'antag',note:'BPD self-harm urges'},
+    {g:'Omega-3 FA',b:'Fish oil',cls:'other',note:'BPD — evidence for impulsivity/aggression reduction'},
+    {g:'Venlafaxine',b:'Effexor XR',cls:'snri',note:'Avoidant PD'},
+    {g:'Clonazepam (short-term)',b:'Rivotril',cls:'benzo',note:'Avoidant PD acute anxiety'},
+  ],
+  od:['Per specific drug class; self-harm crisis → safety plan, immediate psychiatric consult, 1:1 monitoring'],
+  note:'<strong>BPD key nursing:</strong> set limits consistently, avoid splitting between staff, therapeutic milieu approach. <strong>ASPD:</strong> no reliable pharmacotherapy. <strong>OCPD vs OCD:</strong> OCPD = ego-syntonic (person is comfortable/proud of orderliness); OCD = ego-dystonic (rituals are unwanted).',
+  refs:['NICE BPD Guidelines','APA','Linehan DBT Manual','DSM-5']
+},
+// ===== SOMATIC =====
+{
+  id:'somatic',icon:'🩺',title:'Somatic Symptom & Related Disorders',
+  subtitle:'SSD, Illness Anxiety (prev. Hypochondriasis), Conversion, Factitious',
+  dsm:'DSM-5: F45',category:'somatic',dsmchange:true,
+  dsmchangeNote:'DSM-5 MAJOR CHANGES: Hypochondriasis → split into Illness Anxiety Disorder (minimal sx, health preoccupation) + Somatic Symptom Disorder (significant distressing sx). Somatization D/O + Pain D/O merged into SSD.',
+  color:{bg:'#E0F2F1',border:'#B2DFDB',acc:'#00574a',ib:'#B2F0EB',ibl:'#004040',pill:'#B2F0EB',pt:'#004D44',pill2:'#FFF5CC',pt2:'#7A5A00'},
+  illness:{
+    desc:'SSD: ≥1 distressing somatic sx + excessive thoughts/feelings/behaviors. IAD: preoccupation with having/acquiring serious illness without significant sx. Conversion: motor/sensory sx inconsistent with neurological disease. Factitious: intentional falsification of symptoms.',
+    hallmarks:['SSD: somatic sx + disproportionate thoughts (not feigning)','IAD (old Hypochondriasis): health anxiety WITHOUT significant sx; high medical utilization','Conversion D/O: la belle indifférence (indifference to symptoms); non-anatomical distribution; Hoover\'s sign','Factitious: intentional production; no external incentives (vs. Malingering which has external gain)','Illness Anxiety: care-seeking type vs care-avoidant type'],
+    duration:'SSD: ≥6 months; IAD: ≥6 months',
+    phnote:'In PH: somatization often culturally sanctioned expression of psychological distress. "Susto" and "bangungot" are culturally bound somatic expressions.'
+  },
+  first:[
+    {g:'CBT (Cognitive Behavioral Therapy)',b:'—',cls:'other',note:'Primary for all somatic disorders; challenging maladaptive health beliefs'},
+    {g:'Scheduled Regular Visits',b:'—',cls:'other',note:'Reduces ER visits; consistent therapeutic relationship'},
+    {g:'SSRIs (Fluoxetine/Escitalopram)',b:'Prozac/Lexapro',cls:'ssri',note:'Comorbid depression/anxiety; IAD (illness anxiety)'},
+    {g:'Duloxetine',b:'Cymbalta',cls:'snri',note:'SSD with pain symptoms; fibromyalgia-like presentations'},
+  ],
+  second:[
+    {g:'Low-dose Amitriptyline',b:'Elavil',cls:'tca',note:'Chronic pain variant of SSD'},
+    {g:'Pregabalin',b:'Lyrica',cls:'other',note:'Pain-predominant SSD'},
+    {g:'Physiotherapy + Graded Exercise',b:'—',cls:'other',note:'Conversion disorder; functional neurological disorder'},
+    {g:'Clomipramine',b:'Anafranil',cls:'tca',note:'IAD with obsessive features'},
+  ],
+  od:['Per drug class used; SSD rarely involves high-lethality OD'],
+  note:'<strong>NEVER order unnecessary tests</strong> — reinforces belief in serious disease. Factitious Disorder: confrontation usually not helpful; aim for "face-saving" therapeutic resolution. Conversion: physical + psychological rehabilitation. <strong>Malingering</strong> (external gain, e.g., disability claim) is NOT a mental disorder.',
+  refs:['DSM-5','APA','NICE CG functional symptoms','MIMS PH']
+},
+// ===== NEURODEVELOPMENTAL =====
+{
+  id:'adhd',icon:'⚡',title:'ADHD',
+  subtitle:'Inattention, hyperactivity-impulsivity across settings',
+  dsm:'DSM-5: F90',category:'neurodev',dsmchange:false,
+  color:{bg:'#FFFDE7',border:'#FDEEBB',acc:'#8a6200',ib:'#FFF5BB',ibl:'#5a4000',pill:'#FFF5BB',pt:'#7A5C00',pill2:'#FFF5CC',pt2:'#7A5A00'},
+  illness:{
+    desc:'≥6 inattention AND/OR ≥6 hyperactivity-impulsivity symptoms; present before age 12; in ≥2 settings; causing functional impairment. DSM-5 raised age criterion to 12 (from 7) and allows adult diagnosis.',
+    hallmarks:['Inattentive: easily distracted, forgetful, doesn\'t finish tasks, loses things, doesn\'t listen','Hyperactive-Impulsive: fidgets, leaves seat, runs/climbs inappropriately, talks excessively, blurts out, can\'t wait turn','Symptoms before age 12 in ≥2 settings','3 presentations: Inattentive, Hyperactive-Impulsive, Combined'],
+    duration:'Symptoms present >6 months; before age 12',
+    phnote:'Methylphenidate requires PDEA Schedule II prescription in PH. Atomoxetine preferred if substance abuse risk.'
+  },
+  first:[
+    {g:'Methylphenidate',b:'Ritalin, Concerta',cls:'stim',note:'PDEA Schedule II in PH; most effective; multiple release formulations'},
+    {g:'Methylphenidate ER',b:'Concerta, Rubifen',cls:'stim',note:'Once-daily; better compliance; school-hours coverage'},
+    {g:'Atomoxetine',b:'Strattera',cls:'other',note:'Non-stimulant; no abuse risk; preferred in substance abuse Hx; SNRI mechanism'},
+  ],
+  second:[
+    {g:'Dexamphetamine',b:'Dexedrine',cls:'stim',note:'Schedule II; alternative stimulant'},
+    {g:'Lisdexamfetamine',b:'Vyvanse',cls:'stim',note:'Prodrug; lower abuse potential; FDA-approved BED and ADHD'},
+    {g:'Bupropion',b:'Wellbutrin',cls:'other',note:'NDRI; off-label; comorbid depression/ADHD'},
+    {g:'Clonidine',b:'Catapres',cls:'other',note:'For tics, sleep, and aggression comorbidities'},
+    {g:'Guanfacine',b:'Intuniv, Tenex',cls:'other',note:'Non-stimulant; for hyperactivity; alpha-2 agonist'},
+  ],
+  od:[
+    'Stimulant OD: hypertension → Phentolamine/Labetalol; tachycardia/agitation → Benzodiazepines; hyperthermia → cooling',
+    'Atomoxetine OD: monitor BP/HR; supportive; no specific antidote',
+  ],
+  note:'<strong>Stimulants:</strong> PDEA Schedule II in PH — requires special prescription. Take drug holidays on weekends/school breaks to assess growth (height/weight monitoring required). Do NOT combine stimulants with MAOIs (hypertensive crisis).',
+  refs:['PDEA Philippines','AAP ADHD Guidelines','NICE NG87','MIMS PH']
+},
+{
+  id:'autism',icon:'🌈',title:'Autism Spectrum Disorder (ASD)',
+  subtitle:'Social communication deficits + restricted/repetitive behaviors',
+  dsm:'DSM-5: F84.0',category:'neurodev',dsmchange:true,
+  dsmchangeNote:'DSM-5: Asperger\'s Disorder, Autistic Disorder, PDD-NOS, CDD all merged → Single ASD spectrum with severity levels 1, 2, 3.',
+  color:{bg:'#FFFDE7',border:'#FDEEBB',acc:'#8a6200',ib:'#FFF5BB',ibl:'#5a4000',pill:'#FFF5BB',pt:'#7A5C00',pill2:'#FFF5CC',pt2:'#7A5A00'},
+  illness:{
+    desc:'Persistent deficits in social communication/interaction + restricted, repetitive patterns of behavior. Present from early childhood. Severity levels 1 (requiring support), 2 (substantial support), 3 (very substantial support).',
+    hallmarks:['Social-communication deficits: reduced sharing, abnormal social approach, lack of reciprocity, poor eye contact','Restricted/repetitive: stereotyped movements, insistence on sameness, restricted interests, sensory hyper/hyposensitivity','Asperger\'s (old) = now ASD Level 1 (no language delay, normal IQ)','Associated: intellectual disability (50%), seizures (25%), anxiety'],
+    duration:'Present from early developmental period',
+    phnote:'Early intervention (ABA therapy) is most effective — DepEd SPED program available. PH: DSSWD and private ABA centers.'
+  },
+  first:[
+    {g:'Applied Behavior Analysis (ABA)',b:'—',cls:'other',note:'Gold standard intervention; not a drug'},
+    {g:'Risperidone',b:'Risperdal',cls:'ap_atyp',note:'FDA-approved for ASD irritability (aggression, tantrums, self-injury); 5–16 yo'},
+    {g:'Aripiprazole',b:'Abilify',cls:'ap_atyp',note:'FDA-approved for ASD irritability; favorable metabolic profile'},
+  ],
+  second:[
+    {g:'Fluoxetine/SSRIs',b:'Prozac',cls:'ssri',note:'Repetitive behaviors; comorbid anxiety; evidence mixed'},
+    {g:'Guanfacine/Clonidine',b:'Intuniv',cls:'other',note:'ADHD features; hyperactivity; impulsivity'},
+    {g:'Melatonin',b:'—',cls:'other',note:'Sleep disorders (very common in ASD)'},
+    {g:'Methylphenidate',b:'Ritalin',cls:'stim',note:'Comorbid ADHD — less effective than in non-ASD; lower doses'},
+  ],
+  od:['Risperidone/Aripiprazole OD: QTc monitoring, activated charcoal if early, sedation → supportive'],
+  note:'<strong>No medication for core ASD features</strong> — pharmacotherapy targets specific symptoms (irritability, sleep, repetitive behavior, anxiety). Early ABA therapy (before age 5) yields best outcomes. Sensory sensitivities: avoid unnecessary touch/loud environments.',
+  refs:['AAP ASD Guidelines','Autism Speaks','DSM-5','DepEd SPED Program PH']
+},
+{
+  id:'intellectual',icon:'🧸',title:'Intellectual Disability & Specific Learning Disorders',
+  subtitle:'Formerly: Mental Retardation; Dyslexia, Dyscalculia, Dysgraphia',
+  dsm:'DSM-5: F70–F89',category:'neurodev',dsmchange:true,
+  dsmchangeNote:'DSM-5: "Mental Retardation" → "Intellectual Disability (Intellectual Developmental Disorder)". Severity now based on ADAPTIVE FUNCTIONING, not IQ alone.',
+  color:{bg:'#FFFDE7',border:'#FDEEBB',acc:'#8a6200',ib:'#FFF5BB',ibl:'#5a4000',pill:'#FFF5BB',pt:'#7A5C00',pill2:'#FFF5CC',pt2:'#7A5A00'},
+  illness:{
+    desc:'ID: significant limitations in intellectual functioning AND adaptive behavior (conceptual, social, practical) with onset during developmental period. Learning Disorders: specific deficits in reading (dyslexia), math (dyscalculia), or written expression (dysgraphia).',
+    hallmarks:['ID severity: Mild (IQ ~50–70), Moderate (35–50), Severe (20–35), Profound (<20)','DSM-5: severity based on ADAPTIVE FUNCTIONING not IQ alone','Learning D/O: average intelligence but specific academic skill deficit','Dyslexia: reading (most common); Dyscalculia: math; Dysgraphia: writing'],
+    duration:'Present from developmental period',
+    phnote:'DepEd Special Education (SPED) program mandated for students with ID and learning disorders. SPED centers in all divisions.'
+  },
+  first:[
+    {g:'Special Education (SPED)',b:'—',cls:'other',note:'Primary intervention; DepEd SPED centers PH'},
+    {g:'Behavioral Therapy',b:'—',cls:'other',note:'Skills training, adaptive functioning'},
+    {g:'Treat comorbidities (ADHD, anxiety, seizures)',b:'—',cls:'other',note:'Pharmacotherapy for comorbid conditions'},
+  ],
+  second:[
+    {g:'Risperidone (low dose)',b:'Risperdal',cls:'ap_atyp',note:'Self-injurious behavior, aggression'},
+    {g:'Valproate',b:'Depakene',cls:'mood',note:'Comorbid seizures; mood instability'},
+    {g:'Melatonin',b:'—',cls:'other',note:'Sleep disorders common in ID'},
+    {g:'SSRIs',b:'—',cls:'ssri',note:'Comorbid anxiety or depression'},
+  ],
+  od:['Per comorbidity drug used; antipsychotic OD → activated charcoal, supportive'],
+  note:'<strong>Avoid over-medicating</strong> — behavior problems often communication-based. Functional Communication Training (FCT) reduces challenging behaviors. ID is NOT a behavioral disorder but a developmental condition.',
+  refs:['DepEd SPED PH','AAIDD 12th Edition','DSM-5','AAP Guidelines']
+},
+// ===== EATING =====
+{
+  id:'eating',icon:'🍽️',title:'Eating Disorders',
+  subtitle:'Anorexia Nervosa, Bulimia Nervosa, Binge Eating Disorder',
+  dsm:'DSM-5: F50',category:'other',dsmchange:true,
+  dsmchangeNote:'DSM-5: BED (Binge Eating Disorder) now a distinct diagnosis (was appendix in DSM-IV). Removed amenorrhea criterion for AN. ARFID added.',
+  color:{bg:'#FFFBF0',border:'#F5DEB3',acc:'#8B6914',ib:'#FFF0CC',ibl:'#6B4C00',pill:'#FFF0CC',pt:'#6B4C00',pill2:'#FFF5CC',pt2:'#7A5A00'},
+  illness:{
+    desc:'AN: restriction of energy intake → significantly low body weight + intense fear of gaining weight + distorted body image. BN: recurrent binge eating + compensatory behaviors (purging, fasting, excessive exercise). BED: binges without compensation.',
+    hallmarks:['AN: low BMI + intense fear of weight gain + distorted body image; highest psychiatric mortality','BN: binge-purge cycles; normal weight; Russell\'s sign (calluses on knuckles); dental erosion','BED: binges ≥1x/week x 3 months; marked distress; NO compensation; most common eating disorder','AN subtypes: restricting vs binge-purge'],
+    duration:'BN/BED: ≥1x/week x 3 months; AN: ongoing low weight',
+    phnote:'AN has highest mortality of any psychiatric disorder. Monitor for refeeding syndrome when nutritionally rehabilitating.'
+  },
+  first:[
+    {g:'Fluoxetine 60mg',b:'Prozac',cls:'ssri',note:'ONLY FDA-approved drug for Bulimia Nervosa (higher dose than depression)'},
+    {g:'Nutritional rehabilitation',b:'—',cls:'other',note:'PRIMARY for Anorexia; weight restoration before psychotherapy'},
+    {g:'CBT-E (Enhanced CBT)',b:'—',cls:'other',note:'Gold standard psychotherapy for BN and BED'},
+    {g:'Family-Based Treatment (FBT)',b:'—',cls:'other',note:'Gold standard for adolescent AN (Maudsley approach)'},
+  ],
+  second:[
+    {g:'Lisdexamfetamine',b:'Vyvanse',cls:'stim',note:'FDA-approved for BED (only)'},
+    {g:'Topiramate',b:'Topamax',cls:'anti',note:'BED and BN; reduces binge frequency; weight loss SE beneficial'},
+    {g:'Olanzapine',b:'Zyprexa',cls:'ap_atyp',note:'Anorexia — weight restoration, anxiety; evidence moderate'},
+    {g:'Mirtazapine',b:'Remeron',cls:'other',note:'Anorexia with comorbid depression; weight gain SE helpful'},
+  ],
+  od:[
+    '⚠️ AVOID Bupropion in eating disorders — lowers seizure threshold + electrolyte imbalance = seizure risk',
+    'Refeeding syndrome: ↓ Phosphate → cardiac arrhythmia → monitor phosphate, Mg, K; supplement slowly',
+    'Hypokalemia (purging): cardiac arrhythmia → IV K replacement; monitor QTc',
+    'Topiramate OD: metabolic acidosis, kidney stones risk; bicarbonate',
+  ],
+  note:'<strong>CONTRAINDICATION:</strong> Bupropion is CONTRAINDICATED in all eating disorders. Refeeding syndrome: start feeding SLOWLY; monitor electrolytes. AN: hospitalization when BMI <15 or medically unstable.',
+  refs:['AED (Academy for Eating Disorders)','NICE ED Guidelines','DSM-5','UpToDate']
+},
+// ===== OTHER =====
+{
+  id:'sleep',icon:'😴',title:'Sleep-Wake Disorders',
+  subtitle:'Insomnia, Narcolepsy, RBD, Parasomnias, Restless Legs',
+  dsm:'DSM-5: G47',category:'other',dsmchange:false,
+  color:{bg:'#F9F4FF',border:'#E6CCFF',acc:'#4a2a9a',ib:'#EDE0FF',ibl:'#3a1a7a',pill:'#EDE0FF',pt:'#4a1277',pill2:'#FFF5CC',pt2:'#7A5A00'},
+  illness:{
+    desc:'Insomnia Disorder: dissatisfaction with sleep quality/quantity ≥3 nights/week x ≥3 months. Narcolepsy: excessive daytime sleepiness + cataplexy + sleep paralysis + hypnagogic hallucinations. RBD: acting out dreams during REM.',
+    hallmarks:['Insomnia: difficulty initiating, maintaining, or early morning awakening','Narcolepsy: sleep attacks; cataplexy (loss of muscle tone triggered by emotion)','Sleep paralysis + hypnagogic hallucinations (narcolepsy)','REM Behavior Disorder (RBD): dream enactment; associated with Parkinson\'s/DLB','Restless Legs Syndrome: urge to move legs; worsens at rest/night; relieved by movement'],
+    duration:'Insomnia: ≥3 months; Narcolepsy: ongoing',
+    phnote:'CBT-I is preferred first-line in PH due to availability concerns for newer sleep agents. Clonazepam widely used for RBD in PH.'
+  },
+  first:[
+    {g:'CBT-I (Cognitive Behavioral Therapy for Insomnia)',b:'—',cls:'other',note:'GOLD STANDARD for chronic insomnia; superior to medication long-term'},
+    {g:'Melatonin',b:'—',cls:'other',note:'Circadian rhythm disorders; jet lag; delayed sleep phase'},
+    {g:'Zolpidem',b:'Stilnox, Ambien',cls:'hypnotic',note:'Z-drug (non-benzo); short-term insomnia only; fall risk in elderly'},
+    {g:'Modafinil',b:'Provigil',cls:'stim',note:'Narcolepsy; promotes wakefulness; Schedule IV; less abuse risk'},
+  ],
+  second:[
+    {g:'Doxepin (low dose)',b:'Silenor',cls:'tca',note:'FDA-approved for insomnia (sleep maintenance); H1 blocker at low dose'},
+    {g:'Clonazepam',b:'Rivotril',cls:'benzo',note:'RBD (REM Behavior Disorder); nighttime myoclonus'},
+    {g:'Pramipexole/Ropinirole',b:'Mirapex/Requip',cls:'other',note:'Restless Legs Syndrome; dopamine agonists'},
+    {g:'Ramelteon',b:'Rozerem',cls:'other',note:'Melatonin receptor agonist; insomnia; no dependence risk'},
+    {g:'Sodium oxybate (GHB)',b:'Xyrem',cls:'other',note:'Narcolepsy with cataplexy; controlled substance'},
+  ],
+  od:[
+    'Zolpidem OD: Flumazenil reverses sedation; respiratory support; similar to benzo OD',
+    'Benzo OD: Flumazenil 0.2mg IV; ventilatory support',
+    'Modafinil OD: supportive; no antidote; monitor BP/HR',
+  ],
+  note:'<strong>Zolpidem</strong> is a Z-drug (non-benzodiazepine GABA-A agonist) — Flumazenil DOES reverse its effects. Avoid in elderly (fall risk, cognitive impairment, complex sleep behaviors). <strong>Narcolepsy:</strong> scheduled naps help as non-pharm adjunct.',
+  refs:['AASM Guidelines','NICE NG215','DSM-5','MIMS PH']
+},
+{
+  id:'dissociative',icon:'🪞',title:'Dissociative Disorders',
+  subtitle:'DID, Dissociative Amnesia, Depersonalization/Derealization',
+  dsm:'DSM-5: F44',category:'other',dsmchange:false,
+  color:{bg:'#F9F4FF',border:'#E6CCFF',acc:'#4a2a9a',ib:'#EDE0FF',ibl:'#3a1a7a',pill:'#EDE0FF',pt:'#4a1277',pill2:'#FFF5CC',pt2:'#7A5A00'},
+  illness:{
+    desc:'DID (formerly MPD): ≥2 distinct personality states; amnesia between states; trauma-related. Dissociative Amnesia: inability to recall autobiographical info (trauma-based); may involve fugue (purposeful travel + identity confusion). Depersonalization/Derealization: feeling detached from self or surroundings.',
+    hallmarks:['DID: ≥2 personality states; recurrent amnesia gaps; most trauma-linked; alters (identities)','Dissociative Amnesia: selective memory loss; trauma basis; localized > selective > generalized','Depersonalization: "I am an observer of myself" — robot-like feeling','Derealization: "The world is not real" — dreamlike quality','ALL involve disruption of normal integration of consciousness/identity/memory'],
+    duration:'Varies by subtype; DID is chronic',
+    phnote:'Dissociative episodes (e.g., "nagtatambal" or trance-like states) may have cultural presentation in PH — distinguish from pathological dissociation.'
+  },
+  first:[
+    {g:'Trauma-focused Psychotherapy (EMDR, TF-CBT)',b:'—',cls:'other',note:'Primary treatment for DID and dissociative amnesia'},
+    {g:'SSRIs (Fluoxetine/Sertraline)',b:'—',cls:'ssri',note:'Comorbid depression/PTSD/anxiety'},
+  ],
+  second:[
+    {g:'Naltrexone',b:'Revia',cls:'antag',note:'Depersonalization/Derealization D/O — some evidence'},
+    {g:'Lamotrigine',b:'Lamictal',cls:'anti',note:'DID — mood stabilization; off-label'},
+    {g:'Clonazepam (acute crisis)',b:'Rivotril',cls:'benzo',note:'Acute distress/switching; short-term'},
+  ],
+  od:['Per drug class; primarily supportive','Self-harm crisis: safety planning, 1:1 observation'],
+  note:'<strong>DID:</strong> no medication changes alter states — pharmacotherapy treats comorbidities. Do NOT challenge or debate the existence of alters. Safe, consistent therapeutic environment is paramount. Memory retrieval techniques are controversial.',
+  refs:['ISSTD Guidelines','DSM-5','APA']
+},
+{
+  id:'adjustment',icon:'🌊',title:'Adjustment Disorder',
+  subtitle:'Maladaptive response to identifiable stressor within 3 months',
+  dsm:'DSM-5: F43.2',category:'other',dsmchange:false,
+  color:{bg:'#F9F4FF',border:'#E6CCFF',acc:'#4a2a9a',ib:'#EDE0FF',ibl:'#3a1a7a',pill:'#EDE0FF',pt:'#4a1277',pill2:'#FFF5CC',pt2:'#7A5A00'},
+  illness:{
+    desc:'Emotional or behavioral symptoms within 3 months of identifiable stressor; disproportionate to expected response; causes significant functional impairment. Resolves within 6 months of stressor ending. NOT bereavement.',
+    hallmarks:['Identifiable STRESSOR within 3 months','Disproportionate or marked distress','NOT attributable to grief (bereavement)','Subtypes: with depressed mood, anxious mood, mixed, disturbance of conduct, mixed emotional/conduct','Resolves within 6 months of stressor ending'],
+    duration:'Within 3 months of stressor; resolves within 6 months of stressor removal',
+    phnote:'Extremely common in PH — typhoons, job loss, relationship breakdown, illness diagnosis. Supportive psychotherapy is first-line.'
+  },
+  first:[
+    {g:'Supportive Psychotherapy',b:'—',cls:'other',note:'Primary — addressing stressor, coping skills'},
+    {g:'Crisis Intervention',b:'—',cls:'other',note:'Acute phase; safety assessment'},
+    {g:'SSRIs (short-term if depressive features)',b:'—',cls:'ssri',note:'Only if significant functional impairment'},
+  ],
+  second:[
+    {g:'Buspirone',b:'Buspar',cls:'buspirone',note:'Anxiety subtype; non-habit forming'},
+    {g:'Mirtazapine',b:'Remeron',cls:'other',note:'Sleep + depression features'},
+  ],
+  od:['Per drug class; primarily supportive'],
+  note:'Adjustment disorder is DIAGNOSIS OF EXCLUSION — rule out MDD, GAD, PTSD first. Stressor must be identifiable and temporal relationship established. Usually pharmacotherapy is NOT needed if stressor resolves.',
+  refs:['DSM-5','APA','DOH Philippines']
+},
+{
+  id:'impulse',icon:'💢',title:'Impulse Control & Disruptive Behavior Disorders',
+  subtitle:'IED, Kleptomania, Pyromania, ODD, Conduct Disorder',
+  dsm:'DSM-5: F63',category:'other',dsmchange:false,
+  color:{bg:'#F9F4FF',border:'#E6CCFF',acc:'#4a2a9a',ib:'#EDE0FF',ibl:'#3a1a7a',pill:'#EDE0FF',pt:'#4a1277',pill2:'#FFF5CC',pt2:'#7A5A00'},
+  illness:{
+    desc:'IED: recurrent explosive outbursts disproportionate to provocation, with distress/impairment. Kleptomania: recurrent stealing not for need/value; pleasure/tension-relief cycle. Pyromania: deliberate fire-setting; fascination with fire; tension-relief cycle. ODD: angry/irritable mood + defiant behavior. CD: rights violations — precursor to ASPD.',
+    hallmarks:['IED: impulsive aggression; hot-tempered; often in young males','Kleptomania: tension before → relief after stealing; items not needed','Pyromania: fascination with fire; tension-relief cycle; NOT for gain/revenge','ODD: irritable, defiant, vindictive — directed at authority figures','Conduct Disorder: persistent rule violations — aggression, deceit, destruction, theft; criterion for ASPD if >18yo'],
+    duration:'IED: recurrent outbursts; Kleptomania/Pyromania: pattern',
+    phnote:'ODD and CD commonly seen in CAMHS (Child and Adolescent MH) in PH. Parent Management Training (PMT) is evidence-based.'
+  },
+  first:[
+    {g:'SSRIs (IED, Kleptomania)',b:'Prozac, Zoloft',cls:'ssri',note:'Reduces impulsivity; mood regulation'},
+    {g:'Valproate/Lithium (IED)',b:'Depakene/Eskalith',cls:'mood',note:'Aggression reduction in IED'},
+    {g:'N-Acetylcysteine (NAC)',b:'Fluimucil',cls:'other',note:'Trichotillomania; kleptomania — modulates glutamate'},
+  ],
+  second:[
+    {g:'Naltrexone (Kleptomania)',b:'Revia',cls:'antag',note:'Reduces urge/pleasure of stealing'},
+    {g:'Atypical AP (low dose, ODD/CD)',b:'Risperdal/Abilify',cls:'ap_atyp',note:'Irritability/aggression in ODD/CD'},
+    {g:'Propranolol (IED)',b:'Inderal',cls:'other',note:'Reduces physical arousal in aggression'},
+    {g:'Parent Management Training (PMT)',b:'—',cls:'other',note:'Evidence-based for ODD/CD in children'},
+  ],
+  od:['Per specific drug class; primarily supportive'],
+  note:'<strong>Trichotillomania:</strong> Habit Reversal Training (HRT) is gold standard behavioral intervention; NAC is most evidence-based pharmacotherapy. <strong>Pyromania:</strong> behavioral therapy; no strong pharmacotherapy evidence. <strong>ASPD</strong> cannot be diagnosed before age 18 — CD before 15 is the prerequisite.',
+  refs:['DSM-5','APA','NICE']
+},
+{
+  id:'gender',icon:'💜',title:'Gender Dysphoria',
+  subtitle:'Previously: Gender Identity Disorder (destigmatized in DSM-5)',
+  dsm:'DSM-5: F64',category:'other',dsmchange:true,
+  dsmchangeNote:'DSM-5: Gender Identity Disorder → Gender Dysphoria. Removed from Sexual D/O chapter. Focus shifted from identity to DISTRESS. Being transgender is NOT a disorder — the distress is.',
+  color:{bg:'#F9F4FF',border:'#E6CCFF',acc:'#4a2a9a',ib:'#EDE0FF',ibl:'#3a1a7a',pill:'#EDE0FF',pt:'#4a1277',pill2:'#FFF5CC',pt2:'#7A5A00'},
+  illness:{
+    desc:'Marked incongruence between experienced/expressed gender and assigned gender, associated with significant distress or functional impairment. The DISTRESS is the disorder — not the gender identity itself.',
+    hallmarks:['Strong desire to be another gender','Discomfort with one\'s sexual characteristics','Strong desire for primary/secondary sex characteristics of another gender','Significant distress or functional impairment','Children vs Adolescent/Adult presentations differ in DSM-5'],
+    duration:'Persistent (DSM-5: several months)',
+    phnote:'In PH: complex legal/cultural context. No gender recognition law. Mental health assessment required for gender-affirming interventions. APA and DOH PH recognize gender dysphoria.'
+  },
+  first:[
+    {g:'Gender-Affirming Psychotherapy',b:'—',cls:'other',note:'Affirmative approach; supporting gender identity'},
+    {g:'Hormone Therapy (supervised)',b:'Estrogen/Testosterone',cls:'other',note:'Under endocrinologist; significant psychological benefit'},
+    {g:'GnRH Agonists (pubertal blockers)',b:'Leuprolide/Lupron',cls:'other',note:'Adolescents: pause puberty; reversible; buys time for decision'},
+  ],
+  second:[
+    {g:'SSRIs (comorbid depression/anxiety)',b:'—',cls:'ssri',note:'Very high comorbidity with depression, anxiety, suicidality'},
+    {g:'Medroxyprogesterone',b:'Provera',cls:'other',note:'Suppress testosterone in transfeminine'},
+  ],
+  od:['Per drug class used'],
+  note:'<strong>High suicide risk</strong> — gender dysphoria has among the highest psychiatric comorbidities (depression, anxiety, PTSD, self-harm). Affirmative care reduces suicidality. Conversion therapy is harmful and unethical.',
+  refs:['Endocrine Society Guidelines','WPATH Standards of Care v8','DSM-5','APA Position Statement']
+},
+];
+
+let currentFilter='all';
+let currentSearch='';
+
+function makePill(text,bg,tc,bc){
+  return `<span class="dpill" style="background:${bg};color:${tc};border-color:${bc}">${text}</span>`;
+}
+
+function makeDrugEntry(d,pillBg,pillText,border,clsKey){
+  const tag = CLASS_TAGS[clsKey]||CLASS_TAGS['other'];
+  return `<div class="drug-entry">
+    <span class="generic">${d.g}</span>${tag}<span class="brand"> (${d.b})</span>
+    ${d.note?`<div class="notes-d">${d.note}</div>`:''}
+  </div>`;
+}
+
+function renderClusters(clusters){
+  return clusters.map(cl=>{
+    return `<div class="cluster-wrap" style="background:${cl.color};border-color:${cl.border}">
+      <div class="cluster-title" style="color:${cl.text}">
+        <span style="background:${cl.border};color:${cl.text};padding:3px 10px;border-radius:20px;font-size:0.72rem">CLUSTER ${cl.letter}</span>
+        ${cl.name}
+      </div>
+      <div style="font-size:0.72rem;color:${cl.text};opacity:0.8;margin-bottom:8px;font-style:italic">${cl.tag}</div>
+      <div class="cluster-disorders">
+        ${cl.disorders.map(pd=>`
+          <div class="pd-item">
+            <div class="pd-name">${pd.name}</div>
+            <div class="pd-hallmark">${pd.hallmark}</div>
+            <div class="pd-key">🔑 ${pd.key}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderCards(){
+  const grid=document.getElementById('disorderGrid');
+  const empty=document.getElementById('emptyMsg');
+  const s=currentSearch.toLowerCase();
+  
+  const filtered=disorders.filter(d=>{
+    const mf=currentFilter==='all'||d.category===currentFilter;
+    const str=(d.title+d.subtitle+(d.first||[]).map(x=>x.g+' '+x.b+' '+x.cls).join(' ')+(d.second||[]).map(x=>x.g+' '+x.b+' '+x.cls).join(' ')+(d.od||[]).join(' ')+(d.note||'')+(d.illness?d.illness.desc+d.illness.hallmarks.join(' '):'')+(d.clusters?d.clusters.map(c=>c.disorders.map(dd=>dd.name+dd.hallmark).join(' ')).join(' '):'')).toLowerCase();
+    return mf&&(!s||str.includes(s));
+  });
+  
+  grid.innerHTML='';
+  if(!filtered.length){empty.style.display='block';return;}
+  empty.style.display='none';
+  
+  filtered.forEach(d=>{
+    const c=d.color;
+    const el=document.createElement('div');
+    el.className='card';
+    el.style.background=c.bg;
+    el.style.borderColor=c.border;
+    el.dataset.id=d.id;
+    
+    const illnessHTML=d.illness?`
+      <div class="illness-info" style="background:${c.ib}22;border-color:${c.border}">
+        <strong>📋 About this disorder</strong>
+        ${d.illness.desc}
+        <ul style="margin-top:6px;padding-left:16px">
+          ${d.illness.hallmarks.map(h=>`<li style="margin-bottom:2px">${h}</li>`).join('')}
+        </ul>
+        ${d.illness.duration?`<div style="margin-top:5px"><strong>Duration:</strong> ${d.illness.duration}</div>`:''}
+        ${d.illness.phnote?`<div style="margin-top:5px;color:${c.acc}"><strong>🇵🇭 PH Note:</strong> ${d.illness.phnote}</div>`:''}
+      </div>
+    `:'';
+    
+    const clustersHTML=d.clusters?renderClusters(d.clusters):'';
+    
+    const firstHTML=(d.first||[]).map(drug=>makeDrugEntry(drug,c.pill,c.pt,c.border,drug.cls)).join('');
+    const secondHTML=(d.second||[]).map(drug=>makeDrugEntry(drug,c.pill2,c.pt2,c.border,drug.cls)).join('');
+    const odHTML=(d.od||[]).map(o=>`<div class="od-item">${o}</div>`).join('');
+    
+    const dsmChangeTag=d.dsmchange?`<span class="dsm-change-tag">DSM CHANGE</span>`:'';
+    
+    el.innerHTML=`
+      <div class="card-header" onclick="toggleCard('${d.id}')">
+        <div class="chl">
+          <span class="card-icon">${d.icon}</span>
+          <div>
+            <div class="card-title">${d.title}</div>
+            <div class="card-subtitle">${d.subtitle}</div>
+            <span class="dsm-tag" style="background:${c.ib};color:${c.acc}">${d.dsm}</span>${dsmChangeTag}
+          </div>
+        </div>
+        <span class="chevron">▼</span>
+      </div>
+      <div class="card-body">
+        <div class="divider"></div>
+        ${d.dsmchange&&d.dsmchangeNote?`<div style="background:#fff9c4;border:1px solid #ffd54f;border-radius:8px;padding:6px 10px;font-size:0.73rem;color:#5d4037;margin-bottom:0.8rem"><strong>⚡ DSM Change:</strong> ${d.dsmchangeNote}</div>`:''}
+        ${illnessHTML}
+        ${clustersHTML}
+        <div class="dsec">
+          <div class="dlabel"><span class="ldot ldot-first"></span>FIRST-LINE TREATMENT</div>
+          ${firstHTML}
+        </div>
+        <div class="dsec">
+          <div class="dlabel"><span class="ldot ldot-second"></span>SECOND-LINE TREATMENT</div>
+          ${secondHTML}
+        </div>
+        <div class="od-box">
+          <div class="od-title">⚠️ Overdose / Toxicity Management</div>
+          ${odHTML}
+        </div>
+        <div class="note-box"><strong>📌 Key Nursing Note:</strong> ${d.note}</div>
+        <div class="ref-row">${(d.refs||[]).map(r=>`<span class="rtag ${(r.includes('DOH')||r.includes('RA ')||r.includes('DDB')||r.includes('PDEA')||r.includes('MIMS')||r.includes('DepEd')||r.includes('PhilHealth'))? 'r-ph':'r-int'}">${r}</span>`).join('')}</div>
+      </div>`;
+    grid.appendChild(el);
+  });
+}
+
+function toggleCard(id){
+  const el=document.querySelector(`[data-id="${id}"]`);
+  if(el)el.classList.toggle('open');
+}
+
+function setFilter(f,btn){
+  currentFilter=f;
+  document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCards();
+}
+
+function filterCards(){
+  currentSearch=document.getElementById('searchInput').value;
+  renderCards();
+}
+
+renderCards();
+</script>
+</body>
+</html>
